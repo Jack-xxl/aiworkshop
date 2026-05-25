@@ -1,9 +1,10 @@
 <template>
-  <router-view />
+  <div class="app-shell">
+    <AppNav />
+    <router-view />
+  </div>
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
+<script setup>
+import AppNav from "./components/AppNav.vue";
 </script>

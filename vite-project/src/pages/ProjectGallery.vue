@@ -1,35 +1,29 @@
-<!-- vite-project/src/pages/ProjectGallery.vue -->
 <template>
-  <div class="container">
-    <h1 class="title">AI 作品展示墙</h1>
-    <p class="subtitle">这里展示的是营员们亲手创造的 AI 项目。</p>
-
-    <div v-if="loading">加载中...</div>
-
-    <div v-else-if="projects.length === 0">暂时还没有作品，快去创建一个吧！</div>
-
-    <div class="grid" v-else>
-      <div
-        v-for="p in projects"
-        :key="p.id"
-        class="card"
-        @click="goDetail(p.id)"
-      >
+  <PageShell wide title="AI 作品展示墙" subtitle="营员们亲手创造的 AI 项目">
+    <div v-if="loading" class="state-box panel">加载中…</div>
+    <div v-else-if="projects.length === 0" class="state-box panel empty">
+      <span class="empty-icon">🎨</span>
+      <p>暂时还没有作品，快去创建一个吧！</p>
+      <router-link class="btn btn-primary" to="/creator">去创造中心</router-link>
+    </div>
+    <div v-else class="grid">
+      <div v-for="p in projects" :key="p.id" class="work-card" @click="goDetail(p.id)">
         <h2>{{ p.title }}</h2>
         <p class="meta">
-          类型：{{ mapType(p.type) }}
-          <span v-if="p.subject"> · 学科：{{ p.subject }}</span>
+          {{ mapType(p.type) }}
+          <span v-if="p.subject"> · {{ p.subject }}</span>
         </p>
         <p class="summary">{{ p.summary }}</p>
         <p class="date">{{ formatDate(p.createdAt) }}</p>
       </div>
     </div>
-  </div>
+  </PageShell>
 </template>
 
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import PageShell from "../components/PageShell.vue";
 
 const router = useRouter();
 const projects = ref([]);
@@ -70,48 +64,67 @@ function formatDate(d) {
 </script>
 
 <style scoped>
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 32px 16px;
+.state-box {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
 }
-.title {
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 8px;
+.empty .empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
 }
-.subtitle {
-  margin-bottom: 24px;
-  color: #555;
+.empty p {
+  margin-bottom: 20px;
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
 }
-.card {
-  border-radius: 12px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  padding: 16px;
+.work-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+  position: relative;
+  overflow: hidden;
 }
-.card:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
-  transform: translateY(-3px);
+.work-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-main);
+}
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+}
+.work-card h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  color: var(--text-primary);
 }
 .meta {
-  color: #6b7280;
-  font-size: 13px;
-  margin-bottom: 4px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin-bottom: 8px;
 }
 .summary {
-  font-size: 14px;
-  margin-bottom: 6px;
+  font-size: 0.92rem;
+  margin-bottom: 8px;
+  line-height: 1.55;
+  color: var(--text);
 }
 .date {
-  font-size: 12px;
-  color: #9ca3af;
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 </style>

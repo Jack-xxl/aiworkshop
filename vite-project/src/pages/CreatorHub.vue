@@ -1,177 +1,84 @@
 <template>
-  <div class="container">
-    <h1 class="title">AI 智能体创造中心</h1>
-    <p class="subtitle">选择你想做的 AI 项目，开始创造属于你的 AI 小伙伴。</p>
-
-    <!-- ------------------ 基础三个项目 ------------------ -->
-    <div class="cards">
-      <div class="card" @click="goCreate('study-companion')">
-        <h2>AI 学习伴侣</h2>
-        <p>语文 / 数学 / 英语任选其一，AI 帮你制定学习计划、出题、讲解难题。</p>
-      </div>
-
-      <div class="card" @click="goCreate('memory-system')">
-        <h2>AI 记忆系统生成器</h2>
-        <p>从知识点生成记忆卡片 + 自测题，提升学习效率。</p>
-      </div>
-
-      <div class="card" @click="goCreate('goal-navigator')">
-        <h2>AI 目标导航员</h2>
-        <p>根据兴趣与优势，绘制未来成长路线图。</p>
+  <PageShell wide title="AI 智能体创造中心" subtitle="选择你想做的 AI 项目，开始创造属于你的 AI 小伙伴">
+    <div class="creator-grid">
+      <div
+        v-for="c in coreProjects"
+        :key="c.type"
+        class="creator-card"
+        @click="goCreate(c.type)"
+      >
+        <span class="card-icon">{{ c.icon }}</span>
+        <h2>{{ c.title }}</h2>
+        <p>{{ c.desc }}</p>
       </div>
     </div>
 
-    <!-- 作品展示墙 -->
-    <router-link class="link-gallery" to="/gallery">
+    <router-link class="gallery-link animate-fade-up delay-3" to="/gallery">
       查看同学们的 AI 作品墙 →
     </router-link>
 
-    <hr class="divider" />
-
-    <!-- ==================== 🆕 AI 单词机入口 ==================== -->
-    <section class="section">
-      <h2 class="section-title">📘 AI 单词机 · 我的专属词汇教练</h2>
+    <section class="feature-section panel animate-fade-up delay-4">
+      <h2>📘 AI 单词机 · 我的专属词汇教练</h2>
       <p class="section-desc">
-        个性化学习方式：从单词库 → 记忆方式 → AI 规划 → 语音闯关 → 错词复习，
-        5 天内做出属于你自己的单词训练系统。
+        从单词库 → 记忆方式 → AI 规划 → 语音闯关 → 错词复习，打造属于你的单词训练系统。
       </p>
-
-      <button class="btn-blue" @click="goWordMachine">
-        🚀 进入 AI 单词机（配置 & 训练）
-      </button>
+      <button class="btn btn-primary" @click="goWordMachine">🚀 进入 AI 单词机</button>
     </section>
 
-    <hr class="divider" />
-
-    <!-- ==================== 🆕 AI 小助手创作工坊 ==================== -->
-    <section class="section">
-      <h2 class="section-title">🎨 AI 小助手创作工坊</h2>
+    <section class="feature-section panel panel-accent animate-fade-up delay-5">
+      <h2>🎨 AI 小助手创作工坊</h2>
       <p class="section-desc">
-        想自己做一个 AI 工具？你可以在这里为它设定名字、头像、主题色、性格，
-        创造独一无二的 AI 小伙伴。
+        设定名字、头像、主题色、性格，创造独一无二的 AI 小伙伴。
       </p>
-      <button class="btn-orange" @click="goAgentBuilder">
-        ✨ 开始创建我的 AI 小助手
-      </button>
+      <button class="btn btn-warn" @click="goAgentBuilder">✨ 创建我的 AI 小助手</button>
     </section>
-  </div>
+  </PageShell>
 </template>
 
 <script setup>
 import { useRouter } from "vue-router";
+import PageShell from "../components/PageShell.vue";
+
 const router = useRouter();
 
-// 原本项目入口
+const coreProjects = [
+  { type: "study-companion", icon: "📖", title: "AI 学习伴侣", desc: "语文 / 数学 / 英语任选，AI 帮你制定计划、出题、讲解难题。" },
+  { type: "memory-system", icon: "🧠", title: "AI 记忆系统生成器", desc: "从知识点生成记忆卡片 + 自测题，提升学习效率。" },
+  { type: "goal-navigator", icon: "🧭", title: "AI 目标导航员", desc: "根据兴趣与优势，绘制未来成长路线图。" },
+];
+
 function goCreate(type) {
   router.push({ name: "ProjectCreate", query: { type } });
 }
-
-// 🆕 跳到 AI 单词机配置 / 训练中心
 function goWordMachine() {
   router.push("/word-builder");
 }
-
-// 🆕 跳到 AI 小助手创作工坊
 function goAgentBuilder() {
   router.push("/agent-builder");
 }
 </script>
 
 <style scoped>
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 16px;
-}
-
-.title {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.subtitle {
-  color: #555;
-  margin-bottom: 24px;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.card {
-  border-radius: 12px;
-  padding: 18px;
-  border: 1px solid #e5e7eb;
-  cursor: pointer;
-  background: #fff;
-  transition: 0.25s;
-}
-
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
-}
-
-.link-gallery {
+.gallery-link {
   display: inline-block;
-  margin-top: 10px;
-  color: #2563eb;
+  margin-bottom: 32px;
+  font-weight: 600;
+  color: var(--accent-cyan);
 }
-
-.divider {
-  margin: 36px 0;
-  border: none;
-  background: #e5e7eb;
-  height: 1px;
-}
-
-.section {
+.feature-section {
   text-align: center;
-  padding: 20px;
-  background: #f7fafc;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  margin-bottom: 24px;
 }
-
-.section-title {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 6px;
+.feature-section h2 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: var(--text-primary);
 }
-
 .section-desc {
-  max-width: 620px;
-  font-size: 15px;
-  color: #555;
-  margin: 0 auto 14px;
-  line-height: 1.6;
-}
-
-.btn-blue,
-.btn-orange {
-  padding: 10px 22px;
-  font-size: 15px;
-  border-radius: 999px;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.btn-blue {
-  background: #3182ce;
-}
-.btn-blue:hover {
-  background: #2b6cb0;
-}
-
-.btn-orange {
-  background: #ed8936;
-}
-.btn-orange:hover {
-  background: #dd6b20;
+  max-width: 560px;
+  margin: 0 auto 20px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.65;
 }
 </style>

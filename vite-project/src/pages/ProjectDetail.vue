@@ -1,6 +1,7 @@
 <!-- vite-project/src/pages/ProjectDetail.vue -->
 <template>
-  <div class="container" v-if="project">
+  <div class="page-wide" v-if="project">
+    <router-link class="back-link" to="/gallery">← 返回作品墙</router-link>
     <h1 class="title">{{ project.title }}</h1>
     <p class="meta">
       类型：{{ mapType(project.type) }}
@@ -18,10 +19,9 @@
       <pre>{{ project.content }}</pre>
     </div>
 
-    <router-link class="back" to="/gallery">← 返回作品墙</router-link>
   </div>
 
-  <div v-else class="container">作品加载中或不存在。</div>
+  <div v-else class="page-wide state">作品加载中或不存在。</div>
 </template>
 
 <script setup>
@@ -57,36 +57,37 @@ function formatDate(d) {
 </script>
 
 <style scoped>
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 32px 16px;
-}
 .title {
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 8px;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 8px;
 }
 .meta {
-  color: #6b7280;
-  font-size: 13px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
   margin-bottom: 4px;
 }
 .block {
   margin-top: 20px;
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.block h2 {
+  margin-top: 0;
+  font-size: 1rem;
 }
 pre {
   white-space: pre-wrap;
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-  font-size: 13px;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text);
 }
-.back {
-  display: inline-block;
-  margin-top: 16px;
-  color: #2563eb;
+.state {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 48px;
 }
 </style>

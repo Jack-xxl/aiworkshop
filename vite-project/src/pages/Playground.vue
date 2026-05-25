@@ -1,5 +1,6 @@
 <template>
   <div class="pg-page">
+    <router-link class="back-link" to="/">← 返回首页</router-link>
     <header class="pg-header">
       <h1>AI 英语项目 · 学习版 Playground</h1>
       <p class="pg-sub">
@@ -969,13 +970,16 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.pg-page .back-link {
+  margin-bottom: 12px;
+}
 .pg-page {
   max-width: 1120px;
   margin: 1.5rem auto;
   padding: 1.4rem 1.2rem 1.8rem;
   background: #ffffff;
   border-radius: 1.2rem;
-  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-lg);
 }
 .pg-header h1 {
   font-size: 1.7rem;

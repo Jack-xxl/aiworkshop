@@ -1,6 +1,7 @@
 <!-- src/pages/WordMachineBuilder.vue -->
 <template>
   <div class="builder-page">
+    <router-link class="back-link" to="/creator">← 返回创造中心</router-link>
     <header class="topbar">
       <h1>AI 单词机 · 配置向导</h1>
       <p class="sub">
@@ -490,13 +491,16 @@ function saveAndGo() {
 </script>
 
 <style scoped>
+.builder-page .back-link {
+  margin-bottom: 12px;
+}
 .builder-page {
   max-width: 1120px;
   margin: 1.5em auto;
   padding: 1.5em 1.2em 1.5em;
   background: #ffffff;
   border-radius: 1.2em;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-lg);
 }
 
 .topbar h1 {

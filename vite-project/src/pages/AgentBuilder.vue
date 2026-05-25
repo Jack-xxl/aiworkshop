@@ -1,6 +1,7 @@
 <!-- src/pages/AgentBuilder.vue -->
 <template>
   <div class="builder-page" :class="themeClass">
+    <router-link class="back-link" to="/creator">← 返回创造中心</router-link>
     <header class="top">
       <h1>AI 小助手创作工坊</h1>
       <p class="sub">
@@ -425,13 +426,16 @@ function resetProfile() {
 </script>
 
 <style scoped>
+.builder-page .back-link {
+  margin-bottom: 12px;
+}
 .builder-page {
   max-width: 1100px;
   margin: 1.5em auto;
   padding: 1.5em 1.4em 1.8em;
   border-radius: 1.4em;
   background: #ffffff;
-  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-lg);
 }
 
 .top h1 {

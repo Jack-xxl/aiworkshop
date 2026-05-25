@@ -1,46 +1,115 @@
 <template>
-  <div style="max-width: 800px; margin: 0 auto; padding: 28px;">
-    <h2 style="font-size:1.5em; margin-bottom:1em;">企业孵化与合作</h2>
-    <p style="margin-bottom:1.5em;">
-      AI创变营不仅是学习和成长的平台，更是青少年创新项目的“孵化器”和社会实践入口。我们面向学员、家长、企业、投资人，开放多元合作，共创未来！
-    </p>
-
-    <div style="background:#e8f1ff; border-radius:10px; padding: 22px; margin-bottom:28px;">
-      <h3 style="margin-top:0;">项目孵化与创新支持</h3>
-      <ul>
-        <li><b>项目孵化支持：</b> 孩子/团队的AI创新项目可获得导师指导、平台资源与技术支持，有机会成为“少年CEO”或技术合伙人。</li>
-        <li><b>创新路演与展示：</b> 定期举办AI创新路演，学员有机会像创业者一样向企业/投资人展示项目。</li>
-        <li><b>孵化基金与奖励：</b> 优秀项目有机会获得创新奖金、孵化基金、创业启动资金。</li>
-        <li><b>平台直接投资与推广：</b> 对特别优秀的创新项目，AI智能坊平台将直接参与投资、推广和产业合作，助力孩子实现从创新到价值转化的飞跃。</li>
-        <li><b>实习与企业实践：</b> 学员可推荐至合作企业实习，参与真实AI项目开发与运营。</li>
-        <li><b>专业导师陪伴：</b> 企业家、技术大咖、教育专家全程一对一/团队指导。</li>
+  <PageShell
+    title="企业孵化与合作"
+    subtitle="青少年创新项目的孵化器与社会实践入口 — 面向学员、家长、企业与投资人"
+  >
+    <div class="panel panel-accent animate-fade-up delay-3">
+      <h3>项目孵化与创新支持</h3>
+      <ul class="incubation-list" style="margin-top:16px;">
+        <li v-for="(item, i) in supportItems" :key="i" class="incubation-item">
+          <span class="incubation-icon">{{ item.icon }}</span>
+          <span class="incubation-body"><b>{{ item.title }}</b> — {{ item.desc }}</span>
+        </li>
       </ul>
     </div>
 
-    <div style="background:#f5f6fa; border-radius:10px; padding: 22px; margin-bottom:28px;">
-      <h3 style="margin-top:0;">合作企业与伙伴</h3>
-      <ul>
-        <li><b>人才直通车：</b> 企业可优先对接平台优秀学员，实现用人前置、储备未来AI人才。</li>
-        <li><b>联合项目开发：</b> 校企联合研发，共同推进AI创新项目落地。</li>
-        <li><b>品牌共建与宣传：</b> 合作伙伴可获得品牌展示与联合宣传机会。</li>
-        <li><b>投资对接：</b> 欢迎投资人/机构参与青少年创新项目，联合孵化共赢。</li>
-      </ul>
+    <div class="panel animate-fade-up delay-4">
+      <h3>合作企业与伙伴</h3>
+      <div class="card-grid cols-2" style="margin-top:16px;">
+        <div v-for="c in partners" :key="c.title" class="info-card">
+          <div class="partner-icon">{{ c.icon }}</div>
+          <h3>{{ c.title }}</h3>
+          <p>{{ c.desc }}</p>
+        </div>
+      </div>
     </div>
 
-    <h3 style="margin-top:2em;">合作与孵化流程</h3>
-    <ol style="margin-bottom:2em;">
-      <li>项目报名与平台入驻</li>
-      <li>专家评审与团队组建</li>
-      <li>项目孵化、导师陪伴与支持</li>
-      <li>路演展示、企业与投资对接</li>
-      <li>投资/实习/成果转化</li>
-    </ol>
+    <div class="panel animate-fade-up delay-4">
+      <h3>合作与孵化流程</h3>
+      <ol class="steps">
+        <li v-for="(s, i) in steps" :key="s">
+          <span class="step-num">{{ i + 1 }}</span>
+          {{ s }}
+        </li>
+      </ol>
+    </div>
 
-    <div style="margin-top: 32px;">
+    <div class="panel animate-fade-up delay-5">
       <h3>愿景展望</h3>
       <p>
-        我们致力于打造中国和全球青少年AI创新项目的最佳孵化平台，链接企业、投资人、导师和社会资源，帮助更多孩子和团队将AI梦想转化为现实价值。对于特别优秀的创新项目，AI智能坊将直接参与投资与推广，助力创新成果实现产业化、社会化，让孩子在这里不仅能成为“少年CEO”或“技术合伙人”，更能与企业、社会共同成长，赋能未来！
+        我们致力于打造中国和全球青少年 AI 创新项目的最佳孵化平台，链接企业、投资人、导师和社会资源，帮助更多孩子将 AI 梦想转化为现实价值。
       </p>
     </div>
-  </div>
+  </PageShell>
 </template>
+
+<script setup>
+import PageShell from "../components/PageShell.vue";
+
+const supportItems = [
+  { icon: "🚀", title: "项目孵化支持", desc: "导师指导、平台资源与技术支持，有机会成为「少年 CEO」。" },
+  { icon: "🎤", title: "创新路演与展示", desc: "定期 AI 创新路演，向企业/投资人展示项目。" },
+  { icon: "💰", title: "孵化基金与奖励", desc: "优秀项目有机会获得创新奖金与创业启动资金。" },
+  { icon: "📈", title: "平台投资与推广", desc: "特别优秀的项目，平台直接参与投资与产业合作。" },
+  { icon: "💼", title: "实习与企业实践", desc: "推荐至合作企业，参与真实 AI 项目开发。" },
+  { icon: "👨‍🏫", title: "专业导师陪伴", desc: "企业家、技术大咖、教育专家全程指导。" },
+];
+
+const partners = [
+  { icon: "👥", title: "人才直通车", desc: "企业可优先对接平台优秀学员，储备未来 AI 人才。" },
+  { icon: "🔬", title: "联合项目开发", desc: "校企联合研发，共同推进 AI 创新项目落地。" },
+  { icon: "📣", title: "品牌共建", desc: "合作伙伴获得品牌展示与联合宣传机会。" },
+  { icon: "🤝", title: "投资对接", desc: "欢迎投资人参与青少年创新项目，联合孵化共赢。" },
+];
+
+const steps = [
+  "项目入驻与评审",
+  "专家评审与团队组建",
+  "项目孵化、导师陪伴与支持",
+  "路演展示、企业与投资对接",
+  "投资 / 实习 / 成果转化",
+];
+</script>
+
+<style scoped>
+.partner-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(37, 99, 235, 0.2));
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.steps li:last-child {
+  border-bottom: none;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-main);
+  color: #fff;
+  font-weight: 800;
+  border-radius: 50%;
+  font-size: 0.9rem;
+}
+</style>

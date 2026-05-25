@@ -1,6 +1,7 @@
 <!-- vite-project/src/pages/ProjectCreate.vue -->
 <template>
-  <div class="container">
+  <div class="page-wide">
+    <router-link class="back-link" to="/creator">← 返回创造中心</router-link>
     <h1 class="title">创建我的 AI 项目</h1>
     <p class="subtitle">根据提示填写信息，AI 会为你生成个性化的方案。</p>
 
@@ -166,25 +167,25 @@ async function handleSave() {
 </script>
 
 <style scoped>
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 32px 16px;
-}
 .title {
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 8px;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, #1e1b4b, var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .subtitle {
   margin-bottom: 24px;
-  color: #555;
+  color: var(--text-muted);
 }
 .form {
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  padding: 20px;
-  background: #fff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 24px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 .field {
   margin-bottom: 16px;
@@ -192,51 +193,67 @@ async function handleSave() {
 label {
   font-weight: 600;
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  font-size: 0.88rem;
 }
 input,
 select,
 textarea {
   width: 100%;
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  font-size: 14px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  font-family: var(--font);
+  background: var(--surface-2);
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
 }
 .btn-primary,
 .btn-secondary {
   border: none;
-  border-radius: 999px;
-  padding: 8px 18px;
+  border-radius: 12px;
+  padding: 11px 22px;
   cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font);
 }
 .btn-primary {
-  background: #2563eb;
+  background: linear-gradient(135deg, var(--primary), #6366f1);
   color: #fff;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
 }
 .btn-secondary {
   margin-top: 12px;
-  background: #10b981;
+  background: linear-gradient(135deg, var(--success), #10b981);
   color: #fff;
 }
 .result {
   margin-top: 24px;
-  padding: 20px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 pre {
   white-space: pre-wrap;
-  background: #111827;
-  color: #f9fafb;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 13px;
+  background: #1e1b4b;
+  color: #e0e7ff;
+  padding: 16px;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
   margin-bottom: 12px;
+  line-height: 1.6;
 }
 .save-msg {
   margin-top: 8px;
-  color: #16a34a;
+  color: var(--success);
+  font-weight: 600;
 }
 </style>

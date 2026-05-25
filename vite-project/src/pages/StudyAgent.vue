@@ -1,6 +1,7 @@
 <!-- src/pages/StudyAgent.vue -->
 <template>
   <div class="agent-page" :class="themeClass">
+    <router-link class="back-link agent-back" to="/">← 返回首页</router-link>
     <!-- 头部：头像 + 名称 + 口号 -->
     <header class="agent-header">
       <div class="avatar">
@@ -61,7 +62,7 @@
     </section>
 
     <!-- 聊天区域 -->
-    <main class="chat-panel">
+    <main class="chat-panel study-chat-panel">
       <div
         v-for="(msg, i) in visibleMessages"
         :key="i"
@@ -535,16 +536,21 @@ function speakMessage(msg) {
 </script>
 
 <style scoped>
+.agent-back {
+  margin-bottom: 12px;
+}
 .agent-page {
   max-width: 900px;
-  margin: 1.5em auto;
-  padding: 1.5em 1.2em 1.2em;
-  background: #ffffff;
-  border-radius: 1.2em;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  margin: 0 auto;
+  padding: 24px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 80px);
+  height: calc(100vh - var(--nav-height) - 32px);
+  min-height: 520px;
 }
 
 .agent-header {
@@ -554,10 +560,10 @@ function speakMessage(msg) {
 }
 
 .avatar {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: #3182ce;
+  background: var(--gradient-main);
   color: #fff;
   display: flex;
   align-items: center;
@@ -566,6 +572,7 @@ function speakMessage(msg) {
   font-size: 20px;
   margin-right: 0.8em;
   overflow: hidden;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
 }
 
 .avatar-img {
@@ -577,46 +584,50 @@ function speakMessage(msg) {
 .info .name {
   font-size: 1.2em;
   font-weight: 700;
-  color: #1a202c;
+  color: var(--text-primary);
 }
 .info .desc {
   font-size: 0.9em;
-  color: #718096;
+  color: var(--text-secondary);
 }
 .info .slogan {
   font-size: 0.85em;
-  color: #2b6cb0;
+  color: var(--accent-cyan);
   margin-top: 0.1rem;
 }
 
 .tabs {
   display: flex;
-  gap: 0.6em;
-  margin: 0.6em 0 0.6em;
+  gap: 0.5em;
+  margin: 0.6em 0;
 }
 
 .tab-btn {
   flex: 1;
-  padding: 0.4em 0.2em;
+  padding: 0.5em 0.2em;
   border-radius: 999px;
-  border: none;
-  font-size: 0.9em;
-  background: #edf2f7;
-  color: #4a5568;
+  border: 1px solid var(--border);
+  font-size: 0.85em;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
   cursor: pointer;
+  transition: all 0.2s;
 }
 .tab-btn.active {
-  background: #3182ce;
+  background: var(--gradient-main);
+  border-color: transparent;
   color: #fff;
   font-weight: 600;
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.35);
 }
 
 .mode-tip {
   font-size: 0.9em;
-  color: #4a5568;
-  background: #f7fafc;
-  border-radius: 0.8em;
-  padding: 0.6em 0.8em;
+  color: var(--text-secondary);
+  background: rgba(124, 58, 237, 0.08);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75em 1em;
   margin-bottom: 0.6em;
 }
 
@@ -630,25 +641,23 @@ function speakMessage(msg) {
 
 .skill-tag {
   display: inline-block;
-  padding: 0.1rem 0.5rem;
+  padding: 0.15rem 0.55rem;
   border-radius: 999px;
-  background: #e6fffa;
-  color: #2c7a7b;
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--accent-cyan);
   font-size: 0.75rem;
+  border: 1px solid rgba(6, 182, 212, 0.25);
 }
 
 .chat-panel {
   flex: 1;
   overflow-y: auto;
-  padding: 0.6em 0;
-  border-top: 1px solid #edf2f7;
-  border-bottom: 1px solid #edf2f7;
   margin-bottom: 0.6em;
 }
 
 .msg-row {
   display: flex;
-  margin: 0.3em 0;
+  margin: 0.5em 0;
 }
 .msg-row.left {
   justify-content: flex-start;
@@ -659,20 +668,23 @@ function speakMessage(msg) {
 
 .msg-bubble {
   position: relative;
-  max-width: 72%;
-  padding: 0.55em 2.0em 0.55em 0.85em;
-  border-radius: 0.9em;
+  max-width: 78%;
+  padding: 0.65em 2.2em 0.65em 1em;
+  border-radius: 16px;
   font-size: 0.96em;
-  line-height: 1.5;
+  line-height: 1.55;
   word-break: break-word;
 }
 .msg-row.left .msg-bubble {
-  background: #edf2f7;
-  color: #1a202c;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.85) 0%, rgba(37, 99, 235, 0.9) 100%);
+  color: #f8fafc;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.25);
 }
 .msg-row.right .msg-bubble {
-  background: #3182ce;
-  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  backdrop-filter: blur(8px);
 }
 
 .msg-content img,
@@ -682,52 +694,64 @@ function speakMessage(msg) {
   display: block;
 }
 
-/* 朗读按钮 */
 .tts-btn {
   position: absolute;
-  right: 6px;
-  bottom: 4px;
+  right: 8px;
+  bottom: 6px;
   border: none;
   background: transparent;
   cursor: pointer;
   font-size: 0.9em;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 .tts-btn:hover {
   opacity: 1;
 }
 
-/* 输入区样式 */
 .input-bar {
   display: flex;
   align-items: center;
-  gap: 0.4em;
+  gap: 0.5em;
   margin-top: 0.4em;
+  padding-top: 0.5em;
+  border-top: 1px solid var(--border);
 }
 
 .text-input {
   flex: 1;
   border-radius: 999px;
-  border: 1px solid #cbd5e0;
-  padding: 0.4em 0.9em;
+  border: 1px solid var(--border);
+  padding: 0.55em 1.1em;
   font-size: 0.95em;
   outline: none;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.text-input::placeholder {
+  color: var(--text-secondary);
 }
 .text-input:focus {
-  border-color: #3182ce;
-  box-shadow: 0 0 0 1px rgba(49, 130, 206, 0.3);
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3), 0 0 24px rgba(124, 58, 237, 0.2);
 }
 
 .icon-btn {
-  border: none;
-  background: #edf2f7;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
   border-radius: 999px;
-  padding: 0.3em 0.7em;
+  padding: 0.35em 0.75em;
   cursor: pointer;
   font-size: 1em;
+  color: var(--text-primary);
+  transition: background 0.2s;
+}
+.icon-btn:hover {
+  background: var(--bg-card-hover);
 }
 .icon-btn.recording {
-  background: #fed7d7;
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
 }
 
 .file-input {
@@ -736,15 +760,17 @@ function speakMessage(msg) {
 
 .send-btn {
   border: none;
-  background: #38a169;
+  background: var(--gradient-main);
   color: #fff;
-  padding: 0.35em 0.9em;
+  padding: 0.45em 1em;
   border-radius: 999px;
   cursor: pointer;
   font-size: 0.95em;
+  font-weight: 600;
+  box-shadow: 0 0 16px rgba(124, 58, 237, 0.3);
 }
 .send-btn:hover {
-  background: #2f855a;
+  filter: brightness(1.1);
 }
 
 /* 简单主题预留（颜色可以后面细调） */

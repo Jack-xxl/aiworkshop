@@ -1,34 +1,31 @@
 <template>
-  <div class="auth-page">
-    <h1 class="title">注册新账号</h1>
-
-    <div class="form">
-      <label>邮箱</label>
-      <input v-model="email" type="email" placeholder="输入邮箱" />
-
-      <label>密码</label>
-      <input v-model="password" type="password" placeholder="输入密码" />
-
-      <button class="btn-primary" @click="handleRegister">注册</button>
-
+  <PageShell title="注册新账号" subtitle="创建账号以保存你的 AI 项目与学习进度" :show-back="true">
+    <div class="form-panel">
+      <div class="form-field">
+        <label>邮箱</label>
+        <input v-model="email" type="email" placeholder="输入邮箱" />
+      </div>
+      <div class="form-field">
+        <label>密码</label>
+        <input v-model="password" type="password" placeholder="输入密码" />
+      </div>
+      <button class="btn btn-primary" style="width:100%;" @click="handleRegister">注册</button>
       <p class="tip">
-        已有账号？
-        <router-link to="/">进入首页</router-link>
+        已有账号？<router-link to="/">进入首页</router-link>
       </p>
-
-      <p v-if="message" class="msg">{{ message }}</p>
+      <p v-if="message" :class="message.startsWith('✅') ? 'msg-ok' : 'msg-err'">{{ message }}</p>
     </div>
-  </div>
+  </PageShell>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import PageShell from "../components/PageShell.vue";
 
 const email = ref("");
 const password = ref("");
 const message = ref("");
-
 const router = useRouter();
 
 function handleRegister() {
@@ -36,75 +33,24 @@ function handleRegister() {
     message.value = "❌ 邮箱和密码不能为空。";
     return;
   }
-
   const raw = localStorage.getItem("user-db");
   const db = raw ? JSON.parse(raw) : {};
-
   if (db[email.value]) {
     message.value = "❌ 该邮箱已注册。";
     return;
   }
-
-  // 写入数据库
   db[email.value] = { email: email.value, password: password.value };
   localStorage.setItem("user-db", JSON.stringify(db));
-
   message.value = "✅ 注册成功！正在进入首页...";
   setTimeout(() => router.push("/"), 800);
 }
 </script>
 
 <style scoped>
-.auth-page {
-  max-width: 360px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  background: #ffffff;
-  border-radius: 1rem;
-  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.06);
-}
-
-.title {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-input {
-  border: 1px solid #cbd5e0;
-  border-radius: 0.5rem;
-  padding: 0.45rem;
-  font-size: 0.95rem;
-}
-
-.btn-primary {
-  background: #3182ce;
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  background: #2b6cb0;
-}
-
 .tip {
-  font-size: 0.85rem;
-  text-align: center;
-  color: #4a5568;
-}
-
-.msg {
-  margin-top: 0.4rem;
+  margin-top: 16px;
   text-align: center;
   font-size: 0.9rem;
-  color: #dd6b20;
+  color: var(--text-muted);
 }
 </style>

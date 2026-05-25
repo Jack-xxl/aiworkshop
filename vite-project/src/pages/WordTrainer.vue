@@ -2,6 +2,7 @@
 <template>
 
   <div class="trainer-page" :style="rootStyle">
+    <router-link class="back-link trainer-back" to="/creator">← 返回创造中心</router-link>
     <header class="topbar">
       <!-- 顶部导师卡片 -->
       <div v-if="agentProfile" class="mentor-box" :class="themeClass">
@@ -1018,13 +1019,16 @@ async function makeStudySummary() {
 </script>
 
 <style scoped>
+.trainer-back {
+  margin-bottom: 12px;
+}
 .trainer-page {
   max-width: 1120px;
   margin: 1.5em auto;
   padding: 1.5em 1.2em 1.5em;
   background: #ffffff;
   border-radius: 1.2em;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-lg);
 }
 .topbar h1 {
   font-size: 1.6rem;
