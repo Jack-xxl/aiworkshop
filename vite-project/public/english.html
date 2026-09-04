@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Jack 的新西兰生活 · Chapter 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-950:#0B1220;
+  --navy-900:#0F1830;
+  --navy-800:#16213E;
+  --navy-700:#1E2C4E;
+  --paper:#F7F2E7;
+  --paper-dim:#EFE6D2;
+  --paper-line:#DED0AE;
+  --ink:#1C2233;
+  --ink-soft:#5B6478;
+  --amber:#E8A33D;
+  --amber-deep:#B9791F;
+  --teal:#3E8E7E;
+  --teal-deep:#2C6459;
+  --coral:#C1442E;
+  --blue:#3E6FA3;
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--navy-950);
+  color:var(--paper);
+  font-family:'Inter',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+  min-height:100vh;
+}
+::selection{background:var(--amber);color:var(--navy-950);}
+
+/* ---------- Header / Departure Board ---------- */
+.board{
+  background:linear-gradient(180deg,#0A0F1E,#111A30 60%,#0B1220);
+  border-bottom:1px solid #22304F;
+  padding:22px 18px 18px;
+  position:relative;
+  overflow:hidden;
+}
+.board::before{
+  content:"";
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,0.015) 0px,rgba(255,255,255,0.015) 1px,transparent 1px,transparent 3px);
+  pointer-events:none;
+}
+.board-eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--amber);opacity:.85;margin-bottom:6px;
+}
+.board-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;
+  font-size:clamp(24px,6vw,34px);
+  line-height:1.15;
+  color:var(--paper);
+  margin:0 0 4px;
+}
+.board-sub{
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  color:#B9C2D9;
+  font-size:15px;
+  margin:0 0 18px;
+}
+.flight-strip{
+  display:flex;gap:10px;flex-wrap:wrap;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+}
+.flight-chip{
+  background:rgba(232,163,61,0.08);
+  border:1px solid rgba(232,163,61,0.35);
+  color:var(--amber);
+  padding:5px 10px;border-radius:6px;
+  letter-spacing:.03em;
+}
+.control-row{
+  display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+  margin-top:14px;padding-top:14px;border-top:1px dashed #2A3A5E;
+}
+.control-group{display:flex;align-items:center;gap:8px;}
+.control-label{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7C88A6;
+  text-transform:uppercase;letter-spacing:.1em;
+}
+.speed-seg{display:flex;background:var(--navy-800);border:1px solid #2A3A5E;border-radius:8px;padding:2px;}
+.speed-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  background:none;border:none;color:#7C88A6;padding:5px 11px;border-radius:6px;
+  cursor:pointer;transition:.15s;
+}
+.speed-btn.active{background:var(--amber);color:#1B1204;}
+.mic-status-btn{
+  font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;
+  background:var(--navy-800);border:1px solid #2A3A5E;color:var(--paper);
+  padding:7px 13px;border-radius:20px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;transition:.15s;
+}
+.mic-status-btn .dot{width:8px;height:8px;border-radius:50%;background:#7C88A6;}
+.mic-status-btn.granted{border-color:var(--teal);color:var(--teal);}
+.mic-status-btn.granted .dot{background:var(--teal);box-shadow:0 0 6px var(--teal);}
+.mic-status-btn.denied{border-color:var(--coral);color:var(--coral);}
+.mic-status-btn.denied .dot{background:var(--coral);}
+
+/* ---------- Scene rail (nav) ---------- */
+.rail-wrap{
+  background:var(--navy-900);
+  border-bottom:1px solid #22304F;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.rail{
+  display:flex;gap:2px;padding:10px 12px;min-width:max-content;
+}
+.rail-btn{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;
+  background:transparent;border:1px solid transparent;
+  color:#7C88A6;
+  padding:8px 12px;border-radius:8px;
+  cursor:pointer;white-space:nowrap;
+  transition:.15s;
+}
+.rail-btn .n{color:var(--amber);margin-right:6px;}
+.rail-btn:hover{color:var(--paper);background:#1A253F;}
+.rail-btn.active{
+  background:var(--amber);color:#1B1204;font-weight:600;
+  border-color:var(--amber);
+}
+.rail-btn.active .n{color:#1B1204;}
+
+/* ---------- Progress ---------- */
+.progress-wrap{
+  padding:10px 18px;background:var(--navy-900);
+  border-bottom:1px solid #22304F;
+  display:flex;align-items:center;gap:10px;
+}
+.progress-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7C88A6;white-space:nowrap;}
+.progress-track{flex:1;height:6px;background:#1E2C4E;border-radius:4px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--amber));width:0%;transition:width .4s;}
+.progress-count{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--amber);}
+
+/* ---------- Main content ---------- */
+main{max-width:820px;margin:0 auto;padding:22px 16px 80px;}
+.scene{display:none;}
+.scene.active{display:block;animation:fadein .35s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+.scene-head{margin-bottom:18px;}
+.scene-kicker{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber);
+  letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px;
+}
+.scene-title{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:24px;color:var(--paper);margin:0 0 2px;
+}
+.scene-en{font-family:'Newsreader',serif;font-style:italic;color:#9AA5C1;font-size:15px;}
+
+/* Story card */
+.card{
+  background:var(--paper);
+  color:var(--ink);
+  border-radius:var(--radius);
+  padding:20px 20px 18px;
+  margin-bottom:16px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.25);
+}
+.card h3{
+  font-family:'Space Grotesk',sans-serif;font-size:13px;
+  text-transform:uppercase;letter-spacing:.1em;
+  color:var(--amber-deep);margin:0 0 12px;
+  display:flex;align-items:center;gap:8px;
+}
+.story-text{
+  font-family:'Newsreader',serif;
+  font-size:16.5px;line-height:1.85;
+  color:var(--ink);
+  white-space:pre-wrap;
+}
+.story-text b{color:var(--teal-deep);font-weight:600;}
+.story-toggle{
+  margin-top:10px;background:none;border:none;color:var(--amber-deep);
+  font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;
+  text-decoration:underline;padding:0;
+}
+.story-collapsed{max-height:220px;overflow:hidden;position:relative;}
+.story-collapsed::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:60px;
+  background:linear-gradient(180deg,rgba(247,242,231,0),var(--paper));
+}
+
+/* Dialogue lines */
+.dlg-toolbar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  margin:-4px 0 12px;
+}
+.dlg-toolbar-hint{font-size:12px;color:var(--ink-soft);font-family:'Newsreader',serif;font-style:italic;}
+.ibtn.autoplay-btn{
+  background:var(--amber);border-color:var(--amber-deep);color:#1B1204;
+  font-size:13px;padding:8px 14px;
+}
+.ibtn.autoplay-btn.playing{
+  background:var(--coral);border-color:var(--coral);color:#fff;
+  animation:pulse 1.4s infinite;
+}
+.dlg-line{
+  border-top:1px dashed var(--paper-line);
+  padding:12px 6px;
+  display:flex;gap:10px;align-items:flex-start;
+  border-radius:8px;
+  transition:background .25s, box-shadow .25s;
+}
+.dlg-line.dlg-active{
+  background:#FBF0DA;
+  box-shadow:inset 3px 0 0 var(--amber-deep);
+}
+.dlg-line:first-child{border-top:none;}
+.dlg-avatar{
+  width:30px;height:30px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;
+  color:#fff;margin-top:2px;
+}
+.dlg-body{flex:1;min-width:0;}
+.dlg-speaker{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;}
+.dlg-en{font-size:15.5px;font-weight:500;color:var(--ink);margin-bottom:2px;}
+.dlg-ipa{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber-deep);margin-bottom:3px;}
+.stress-p{color:var(--coral);font-weight:800;font-size:1.05em;}
+.stress-s{color:var(--ink-soft);text-decoration:underline dotted;text-decoration-color:currentColor;}
+.kw-line{display:inline;}
+.kw{
+  display:inline-block;border-radius:4px;padding:0 2px;margin:0 -2px;
+  transition:background .12s, color .12s;
+}
+.kw.active{background:var(--amber);color:#1B1204;font-weight:700;}
+.rescue-card .kw.active{background:var(--amber);color:#1B1204;}
+.dlg-zh{font-size:13px;color:var(--ink-soft);}
+.dlg-controls{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+
+/* Buttons */
+.ibtn{
+  border:1px solid var(--paper-line);
+  background:#fff;
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  font-size:12.5px;font-weight:600;
+  padding:6px 11px;border-radius:20px;
+  cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  transition:.15s;
+}
+.ibtn:hover{border-color:var(--amber-deep);color:var(--amber-deep);}
+.ibtn:active{transform:scale(.96);}
+.ibtn.playing{background:var(--amber);border-color:var(--amber-deep);color:#1B1204;}
+.ibtn.recording{background:var(--coral);border-color:var(--coral);color:#fff;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.65;}}
+.ibtn:disabled{opacity:.4;cursor:default;}
+
+.feedback{
+  margin-top:8px;padding:9px 12px;border-radius:10px;
+  font-size:13px;display:none;
+}
+.feedback.show{display:block;}
+.feedback.good{background:#E4F1EC;color:var(--teal-deep);border:1px solid #BEDDD1;}
+.feedback.ok{background:#FBF0DA;color:var(--amber-deep);border:1px solid #F0D6A0;}
+.feedback.bad{background:#FBE7E1;color:var(--coral);border:1px solid #F1C1B3;}
+.feedback .heard{font-family:'IBM Plex Mono',monospace;font-size:11.5px;opacity:.8;margin-top:3px;}
+.fb-head{font-weight:600;margin-bottom:8px;}
+.live-transcript{
+  margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:12px;
+  color:var(--ink-soft);min-height:16px;font-style:italic;
+}
+.diff-line{
+  font-family:'IBM Plex Mono',monospace;font-size:15px;line-height:2.2;
+  color:var(--ink);
+}
+.diff-line .w-ok{
+  color:var(--teal-deep);border-bottom:2px solid var(--teal);
+  padding:1px 2px;
+}
+.diff-line .w-miss{
+  color:#9AA1B0;text-decoration:line-through wavy #C1442E;
+  padding:1px 2px;
+}
+.w-bad-wrap{display:inline-flex;flex-direction:column;align-items:flex-start;vertical-align:top;margin:2px 4px 6px 0;}
+.diff-line .w-bad{
+  color:var(--coral);font-weight:700;border-bottom:2px solid var(--coral);
+  padding:1px 2px;
+}
+.letter-row{display:flex;gap:2px;margin-top:3px;}
+.ltr{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  padding:1px 4px;border-radius:4px;line-height:1.5;
+}
+.ltr.ok{background:#E4F1EC;color:var(--teal-deep);}
+.ltr.bad{background:#FBE7E1;color:var(--coral);text-decoration:underline wavy var(--coral);}
+.ltr.miss{background:#EFE9E3;color:#9AA1B0;text-decoration:line-through;}
+.w-said{
+  font-family:'Inter',sans-serif;font-size:10.5px;color:var(--ink-soft);
+  margin-top:2px;font-style:italic;
+}
+.diff-extra{
+  margin-top:8px;font-size:12.5px;color:var(--amber-deep);
+  font-family:'IBM Plex Mono',monospace;
+}
+.diff-extra .w-extra{
+  background:#FBF0DA;padding:1px 6px;border-radius:4px;margin-right:4px;display:inline-block;
+}
+
+/* Vocab grid */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+.vcard{
+  background:#fff;
+  border:1px solid var(--paper-line);
+  border-radius:12px;
+  padding:14px 14px 12px;
+  position:relative;
+}
+.vcard::before{
+  content:"";position:absolute;left:-6px;top:50%;transform:translateY(-50%);
+  width:12px;height:12px;border-radius:50%;background:var(--navy-950);
+}
+.vtype{
+  position:absolute;top:10px;right:10px;
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;
+  padding:2px 7px;border-radius:10px;letter-spacing:.05em;
+}
+.vtype.A{background:#E4F1EC;color:var(--teal-deep);}
+.vtype.B{background:#E7EDF6;color:var(--blue);}
+.vword{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:var(--ink);margin-bottom:1px;padding-right:44px;}
+.vipa{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber-deep);margin-bottom:6px;}
+.vmeaning{font-size:13px;color:var(--ink-soft);margin-bottom:8px;}
+.vexample{font-size:12.5px;font-family:'Newsreader',serif;font-style:italic;color:var(--ink);margin-bottom:8px;line-height:1.5;}
+
+/* Key phrases hero list */
+.phrase-item{
+  background:#fff;border:1px solid var(--paper-line);border-radius:12px;
+  padding:14px 16px;margin-bottom:10px;
+}
+.phrase-en{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16.5px;color:var(--ink);}
+.phrase-ipa{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber-deep);margin:3px 0;}
+.phrase-zh{font-size:13.5px;color:var(--ink-soft);margin-bottom:8px;}
+
+/* Life-saving phrases special styling on navy */
+.rescue-card{
+  background:var(--navy-800);border:1px solid #2A3A5E;
+  border-radius:14px;padding:16px 18px;margin-bottom:12px;
+}
+.rescue-num{
+  font-family:'IBM Plex Mono',monospace;color:var(--amber);font-size:12px;
+  letter-spacing:.1em;margin-bottom:4px;
+}
+.rescue-en{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;color:var(--paper);}
+.rescue-ipa{font-family:'IBM Plex Mono',monospace;color:#8FA0C6;font-size:12.5px;margin:4px 0 3px;}
+.rescue-zh{font-family:'Newsreader',serif;font-style:italic;color:#C7CFE4;font-size:14px;margin-bottom:10px;}
+.rescue-card .feedback{background:rgba(255,255,255,0.06);}
+.rescue-card .feedback.good{background:rgba(62,142,126,.18);color:#8FD9C4;border-color:rgba(62,142,126,.4);}
+.rescue-card .feedback.ok{background:rgba(232,163,61,.15);color:#F0C778;border-color:rgba(232,163,61,.4);}
+.rescue-card .feedback.bad{background:rgba(193,68,46,.18);color:#F0A08D;border-color:rgba(193,68,46,.4);}
+.rescue-card .ibtn{background:transparent;border-color:#3A4A70;color:var(--paper);}
+.rescue-card .ibtn:hover{border-color:var(--amber);color:var(--amber);}
+.rescue-card .diff-line{color:var(--paper);}
+.rescue-card .diff-line .w-ok{color:#8FD9C4;border-color:var(--teal);}
+.rescue-card .diff-line .w-bad{color:#F0A08D;border-color:var(--coral);}
+.rescue-card .diff-line .w-miss{color:#7C88A6;}
+.rescue-card .w-said{color:#9AA5C1;}
+.rescue-card .live-transcript{color:#9AA5C1;}
+.rescue-card .stress-s{color:#9AA5C1;}
+
+/* Challenge checklist */
+.check-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 4px;border-bottom:1px solid var(--paper-line);
+  cursor:pointer;user-select:none;
+}
+.check-item:last-child{border-bottom:none;}
+.check-box{
+  width:20px;height:20px;border-radius:6px;border:2px solid var(--ink-soft);
+  flex:none;display:flex;align-items:center;justify-content:center;
+  font-size:12px;color:transparent;transition:.15s;
+}
+.check-item.done .check-box{background:var(--teal);border-color:var(--teal-deep);color:#fff;}
+.check-item.done .check-text{color:var(--ink-soft);text-decoration:line-through;}
+.check-text{font-size:14.5px;color:var(--ink);}
+.check-zh{font-size:12px;color:var(--ink-soft);margin-left:auto;padding-left:8px;text-align:right;}
+
+/* nav footer */
+.scene-nav{display:flex;justify-content:space-between;gap:10px;margin-top:22px;}
+.navbtn{
+  flex:1;background:var(--navy-800);border:1px solid #2A3A5E;
+  color:var(--paper);border-radius:12px;padding:13px 14px;
+  font-family:'Inter',sans-serif;font-weight:600;font-size:13.5px;
+  cursor:pointer;text-align:left;
+}
+.navbtn.next{text-align:right;}
+.navbtn:hover{border-color:var(--amber);color:var(--amber);}
+.navbtn .lbl{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7C88A6;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;}
+.navbtn:disabled{opacity:.3;cursor:default;}
+
+.mic-hint{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7C88A6;
+  background:var(--navy-800);border:1px solid #2A3A5E;border-radius:10px;
+  padding:10px 14px;margin-bottom:16px;display:none;
+}
+.mic-hint.show{display:block;}
+
+footer{
+  text-align:center;padding:26px 16px 40px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:#4A567A;
+  line-height:1.7;
+}
+footer code{background:#16213E;color:var(--amber);padding:1px 6px;border-radius:4px;}
+</style>
+</head>
+<body>
+
+<div class="board">
+  <div class="board-eyebrow">My Life in English · Episode 01</div>
+  <h1 class="board-title">Jack 的新西兰生活</h1>
+  <p class="board-sub">从家门到奥克兰 — 一次完整的英语沉浸旅程</p>
+  <div class="flight-strip">
+    <span class="flight-chip">NZ288</span>
+    <span class="flight-chip">SHA → AKL</span>
+    <span class="flight-chip">21 SCENES</span>
+    <span class="flight-chip" id="progressChip">0 / 0 PRACTISED</span>
+  </div>
+  <div class="control-row">
+    <div class="control-group">
+      <span class="control-label">朗读语速</span>
+      <div class="speed-seg" id="speedSeg">
+        <button class="speed-btn" data-rate="0.7">0.7x</button>
+        <button class="speed-btn active" data-rate="0.85">0.85x</button>
+        <button class="speed-btn" data-rate="1">1.0x</button>
+      </div>
+    </div>
+    <div class="control-group">
+      <button class="mic-status-btn" id="micStatusBtn"><span class="dot"></span><span id="micStatusText">点击开启跟读模式（整节课只需一次）</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="rail-wrap">
+  <div class="rail" id="rail"></div>
+</div>
+
+<div class="progress-wrap">
+  <span class="progress-label">CHAPTER PROGRESS</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-count" id="progressPct">0%</span>
+</div>
+
+<main id="main"></main>
+
+<footer>Web Speech API · 页面顶部点一次"开启跟读模式"，整节课只会弹一次授权窗口——请务必选 "Allow while visiting the site"（不要选 "Allow this time"）。如果每次打开都仍然重新弹窗，是因为这是以 file:// 本地文件方式直接打开的，Chrome 对本地文件的权限无法可靠记忆；把文件放到任意 http(s) 网址下访问即可彻底解决，例如用 Python 开一个本地服务器：在文件所在文件夹执行 <code>python -m http.server 8000</code>，然后用 <code>http://localhost:8000/</code> 打开。</footer>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const scenes = [
+{
+  id:0,tag:"INTRO",title:"学习方法",en:"How to use this",
+  isIntro:true,
+  story:`Every scene's story is now written entirely in English — description and dialogue together, just like a real short story. <b>Bold</b> words are the ones worth mastering in that scene.
+
+Each scene's vocabulary cards fall into two groups:
+Group A (green tag) — active vocabulary you should be able to say yourself.
+Group B (blue tag) — recognition vocabulary; understanding it when you hear or see it is enough.
+
+不需要第一遍全部背下来。先读故事，再回到卡片跟读、录音、看纠音反馈。
+
+点 🔊 可以听发音（英式/美式，取决于你的浏览器语音库）。播放时，句子里正在读的那个词会实时高亮（卡拉OK模式），方便你精确对上"现在读到哪个词"。点场景里的"▶ 自动播放整段对话"，整段对话会自动连续播放并逐句高亮，适合纯听力磨耳朵。
+
+每句下面的音标里，红色加粗的部分是重读音节，灰色下划线是次重读——不用另外去记音节划分，这是从音标自动提取标出来的。
+
+点 🎤 可以录下你自己的发音，说话时下方会实时显示识别到的文字，说完后会给出逐词、逐字母的对比：
+　绿色 = 这个词/字母读对了
+　红色 = 这个词/字母没读准（会显示你实际读成了什么）
+　灰色划线 = 系统完全没听到这个词
+
+小提醒：这个对比基于"语音识别出的文字"，不是真正的音标/音素级评测——如果某个词读得含糊到被识别成了另一个词，系统才会标红；如果发音不够地道但仍被认成了正确的词，可能还是会显示绿色。它更适合用来发现"明显读错/读漏的词"，而不是判断口音是否地道。逐词高亮朗读功能在Chrome浏览器下效果最稳定。`,
+  dialogue:[],vocab:[],phrases:[]
+},
+{
+  id:1,tag:"04:30",title:"出发前的兵荒马乱",en:"Packing Disaster & The Taxi",
+  story:`At four-thirty in the morning, before the alarm even rang, Jack was already wide awake. Truthfully, he had barely slept at all. Today he was leaving Changchun for New Zealand — alone, for the very first time. It would take two flights to get there: first a short domestic hop down to Shanghai, then the long haul out across the Pacific.
+
+Two enormous <b>suitcases</b> lay open on the bedroom floor. On the desk sat his <b>passport</b>, his <b>visa</b>, a printed <b>e-ticket</b>, an <b>itinerary</b>, and a copy of his <b>travel insurance</b>.
+
+The first thing Jack did after getting out of bed was check his passport. Still there. Five minutes later, he checked it again. Still there.
+
+"Why do I keep checking you?" he muttered. The passport, of course, said nothing back.
+
+He knelt on the floor for one last inspection of his luggage. "Passport… visa… wallet… phone…" Then came the smaller things: a <b>phone charger</b>, a <b>power bank</b>, <b>earphones</b>, a <b>neck pillow</b>, a wash bag, a jacket, a few sweaters, and a pair of sturdy <b>hiking boots</b>.
+
+Halfway through packing, he suddenly stood up and marched into the kitchen. Five minutes later he came back holding a packet of hotpot seasoning. "This is essential," he said, and stuffed it into a corner of the suitcase, along with two packets of instant noodles and a bag of loose-leaf tea. "Perfect."
+
+Jack yanked the <b>zipper</b> shut and lifted the suitcase onto the bathroom scale. 29.4 kilograms. He went quiet. The <b>baggage allowance</b> printed on his ticket said 23 kilograms. "This is not going to end well."
+
+He reopened the case — two sweaters came out, then a pair of shoes, then a paperback book. He stared at the enormous bag of snacks still sitting there. Food, or clothes? It was, he decided, one of the great dilemmas of adult life. In the end he simply put on a second jacket instead of packing it. "Problem solved," he announced to the empty room. At least, that's what he chose to believe.
+
+At six o'clock, the taxi pulled up outside. The driver popped the trunk. "Airport?" "Yes, please — <b>Changchun Longjia Airport</b>, for the flight to Shanghai." The driver glanced at the two oversized suitcases. "Do you need a hand with those?" "Yes, please. They're a bit heavy." The driver hoisted the first one and visibly sagged under the weight. "A bit heavy?" Jack pretended not to hear.
+
+The driver loaded the bags into the <b>boot</b> — the word New Zealanders and the British use, while Americans usually say <b>trunk</b>. As the car pulled away, the driver glanced at him in the rear-view mirror. "Heading somewhere nice?" "New Zealand, eventually. Shanghai first, then a connecting flight." "Long day ahead of you, then." "Tell me about it," Jack said, and looked out at Changchun sliding past in the dark, wondering when he'd next see it.`,
+  dialogue:[
+    {sp:"Driver",en:"Do you need a hand with those?",ipa:"/də jʊ niːd ə hænd wɪð ðəʊz/",zh:"需要帮你拿这些吗？"},
+    {sp:"Jack",en:"Yes, please. They're a bit heavy.",ipa:"/jes pliːz ðeər ə bɪt ˈhevi/",zh:"好的，谢谢，它们有点重。"},
+    {sp:"Driver",en:"Heading somewhere nice?",ipa:"/ˈhedɪŋ ˈsʌmweə naɪs/",zh:"要去什么好地方吗？"},
+    {sp:"Jack",en:"New Zealand, eventually. Shanghai first, then a connecting flight.",ipa:"/njuː ˈziːlənd ɪˈventʃuəli ˈʃæŋhaɪ fɜːst ðen ə kəˈnektɪŋ flaɪt/",zh:"最终目的地是新西兰，先到上海，然后转机。"},
+    {sp:"Driver",en:"Long day ahead of you, then.",ipa:"/lɒŋ deɪ əˈhed əv juː ðen/",zh:"那你今天有得忙了。"}
+  ],
+  vocab:[
+    {t:"A",w:"suitcase",ipa:"/ˈsuːtkeɪs/",zh:"行李箱",ex:"Two big suitcases lay on the floor."},
+    {t:"A",w:"passport",ipa:"/ˈpɑːspɔːt/",zh:"护照",ex:"Jack kept checking his passport."},
+    {t:"A",w:"visa",ipa:"/ˈviːzə/",zh:"签证",ex:"His visa was with his passport."},
+    {t:"B",w:"e-ticket",ipa:"/ˈiː ˌtɪkɪt/",zh:"电子机票",ex:"He printed his e-ticket."},
+    {t:"B",w:"itinerary",ipa:"/aɪˈtɪnərəri/",zh:"行程单",ex:"The itinerary was on the desk."},
+    {t:"B",w:"travel insurance",ipa:"/ˈtrævəl ɪnˌʃʊərəns/",zh:"旅行保险",ex:"Don't forget your travel insurance."},
+    {t:"A",w:"phone charger",ipa:"/fəʊn ˈtʃɑːdʒə/",zh:"手机充电器",ex:"He packed his phone charger."},
+    {t:"A",w:"power bank",ipa:"/ˈpaʊə bæŋk/",zh:"充电宝",ex:"The power bank was fully charged."},
+    {t:"B",w:"neck pillow",ipa:"/nek ˈpɪləʊ/",zh:"U型枕",ex:"He grabbed his neck pillow."},
+    {t:"B",w:"hiking boots",ipa:"/ˈhaɪkɪŋ buːts/",zh:"登山靴",ex:"He packed his hiking boots."},
+    {t:"A",w:"baggage allowance",ipa:"/ˈbæɡɪdʒ əˌlaʊəns/",zh:"行李额度",ex:"The baggage allowance is 23 kilograms."},
+    {t:"A",w:"domestic flight",ipa:"/dəˈmestɪk flaɪt/",zh:"国内航班",ex:"He took a domestic flight to Shanghai first."}
+  ],
+  phrases:[
+    {en:"Do you need a hand with those?",ipa:"/də jʊ niːd ə hænd wɪð ðəʊz/",zh:"需要帮你拿这些吗？"},
+    {en:"They're a bit heavy.",ipa:"/ðeər ə bɪt ˈhevi/",zh:"它们有点重。"},
+    {en:"Shanghai first, then a connecting flight.",ipa:"/ˈʃæŋhaɪ fɜːst ðen ə kəˈnektɪŋ flaɪt/",zh:"先到上海，然后转机。"}
+  ]
+},
+{
+  id:101,tag:"06:20",title:"长春→上海：国内转机",en:"Changchun to Shanghai: The Connecting Flight",
+  story:`The domestic flight down to Shanghai was mercifully uneventful — a two-hour hop with barely enough time for a short nap and a plastic cup of orange juice. Landing at Shanghai, Jack followed the crowd off the aircraft and straight into a maze of signs: BAGGAGE CLAIM one way, TRANSFERS / CONNECTING FLIGHTS the other.
+
+He found the <b>domestic arrivals</b> baggage belt without much trouble and pulled his suitcase off it — no case of mistaken identity this time. Then came the real question: what next?
+
+A sign above a nearby counter read TRANSFER DESK. He stopped a passing staff member. "Excuse me — I've got a <b>connecting flight</b> to Auckland. Where do I go?" "Is your <b>onward flight</b> from Terminal 1 or Terminal 2?" Jack checked his printed itinerary. "Terminal 1, I think — Air New Zealand." "You'll need to take the <b>inter-terminal shuttle bus</b>. It runs every ten minutes, just outside baggage claim."
+
+Ten minutes later, Jack stood outside with two suitcases, a growing sense of <b>jet lag</b>, and no idea which direction was which. A shuttle bus, labelled helpfully in both Chinese and English, pulled up right on cue. "Terminal 1?" he asked the driver, just to be sure. The driver nodded. A short ride later, Jack stepped off in front of a very different set of departure boards — this time, all international.
+
+He checked his watch. Plenty of time before his flight to Auckland. He pushed his luggage trolley toward the <b>international departures</b> hall, quietly grateful that the trickiest part of the journey — for now — was behind him.`,
+  dialogue:[
+    {sp:"Jack",en:"I've got a connecting flight to Auckland. Where do I go?",ipa:"/aɪv ɡɒt ə kəˈnektɪŋ flaɪt tə ˈɔːklənd weə duː aɪ ɡəʊ/",zh:"我有一个转机航班去奥克兰，我该往哪走？"},
+    {sp:"Staff",en:"Is your onward flight from Terminal 1 or Terminal 2?",ipa:"/ɪz jɔːr ˈɒnwəd flaɪt frɒm ˈtɜːmɪnl wʌn ɔː ˈtɜːmɪnl tuː/",zh:"你的后续航班是从1号还是2号航站楼出发？"},
+    {sp:"Jack",en:"Terminal 1, I think — Air New Zealand.",ipa:"/ˈtɜːmɪnl wʌn aɪ θɪŋk eər njuː ˈziːlənd/",zh:"应该是1号航站楼——新西兰航空。"},
+    {sp:"Staff",en:"You'll need to take the inter-terminal shuttle bus.",ipa:"/juːl niːd tə teɪk ði ˈɪntə ˈtɜːmɪnl ˈʃʌtl bʌs/",zh:"你需要坐航站楼间的接驳车。"},
+    {sp:"Jack",en:"Terminal 1?",ipa:"/ˈtɜːmɪnl wʌn/",zh:"是去1号航站楼吗？"}
+  ],
+  vocab:[
+    {t:"A",w:"domestic arrivals",ipa:"/dəˈmestɪk əˈraɪvəlz/",zh:"国内到达",ex:"He landed in the domestic arrivals area."},
+    {t:"A",w:"transfer desk",ipa:"/ˈtrænsfɜː desk/",zh:"转机服务台",ex:"He stopped at the transfer desk to ask for directions."},
+    {t:"A",w:"connecting flight",ipa:"/kəˈnektɪŋ flaɪt/",zh:"转乘/联程航班",ex:"He had a connecting flight to Auckland."},
+    {t:"A",w:"onward flight",ipa:"/ˈɒnwəd flaɪt/",zh:"后续航班",ex:"Is your onward flight from Terminal 1 or Terminal 2?"},
+    {t:"A",w:"inter-terminal shuttle bus",ipa:"/ˈɪntə ˈtɜːmɪnl ˈʃʌtl bʌs/",zh:"航站楼间接驳车",ex:"You'll need to take the inter-terminal shuttle bus."},
+    {t:"A",w:"international departures",ipa:"/ˌɪntəˈnæʃənəl dɪˈpɑːtʃəz/",zh:"国际出发",ex:"He pushed his trolley toward international departures."},
+    {t:"B",w:"jet lag",ipa:"/dʒet læɡ/",zh:"时差反应",ex:"A growing sense of jet lag set in."}
+  ],
+  phrases:[
+    {en:"Which terminal does my flight leave from?",ipa:"/wɪtʃ ˈtɜːmɪnl dʌz maɪ flaɪt liːv frɒm/",zh:"我的航班从哪个航站楼出发？"},
+    {en:"Do I need to take a shuttle bus?",ipa:"/duː aɪ niːd tə teɪk ə ˈʃʌtl bʌs/",zh:"我需要坐接驳车吗？"},
+    {en:"How do I get to the international terminal?",ipa:"/haʊ duː aɪ ɡet tə ði ˌɪntəˈnæʃənəl ˈtɜːmɪnl/",zh:"我怎么去国际航站楼？"}
+  ]
+},
+{
+  id:2,tag:"10:30",title:"值机",en:"The Departure Board & Check-in",
+  story:`Now inside the <b>departure hall</b>, Jack looked up at the <b>departure board</b>, a huge screen scrolling through dozens of flights. There it was: NZ288 — AUCKLAND — ON TIME. "At least the plane exists," he thought. Underneath, another line read: Check-in was already open.
+
+With <b>check-in counter</b> lines still moving steadily, Jack joined the queue. There was no <b>self-service kiosk</b> free, so he waited in the regular line instead. When his turn finally came, the staff member smiled. "May I see your <b>passport</b> and <b>booking reference</b>, please?" "Sure. Here you are." "Would you prefer an <b>aisle seat</b> or a <b>window seat</b>?" "<b>Window seat</b>, please. I want to see the ocean." "Do you have any bags to check in?" "Two." "Please put the first one on the <b>scale</b>."
+
+The number jumped to 31.5 kilograms. "Sir, the <b>weight limit</b> for <b>checked baggage</b> is 23 kilograms. This bag is <b>overweight</b>." "How much overweight?" "Eight and a half kilos." "<b>What are my options?</b>" "You can pay the <b>excess baggage fee</b>, or remove some items." "I'll remove some items."
+
+Right there at the counter, Jack unzipped the suitcase. Out came a sweater, a pair of shoes, some snacks, and — inevitably — the hotpot seasoning. "What is that?" the staff member asked. "Hotpot seasoning," Jack said. "Emergency food." She laughed. Everything went into the <b>carry-on bag</b>, which instantly puffed up like a balloon. Back on the scale: 22.8 kilograms. "Perfect."
+
+"Here's your <b>boarding pass</b>. <b>Gate</b> 71. <b>Boarding time</b> is 12:20. Your <b>seat number</b> is 34A. Have a nice flight." "Thank you." One obstacle down. Jack let out a long breath and headed for security.`,
+  dialogue:[
+    {sp:"Staff",en:"May I see your passport and booking reference, please?",ipa:"/meɪ aɪ siː jɔː ˈpɑːspɔːt ənd ˈbʊkɪŋ ˈrefərəns pliːz/",zh:"可以看一下您的护照和预订编号吗？"},
+    {sp:"Jack",en:"Sure. Here you are.",ipa:"/ʃʊə hɪə juː ɑː/",zh:"好的，给您。"},
+    {sp:"Staff",en:"Would you prefer an aisle seat or a window seat?",ipa:"/wʊd juː prɪˈfɜːr ən aɪl siːt ɔːr ə ˈwɪndəʊ siːt/",zh:"您想靠走道还是靠窗？"},
+    {sp:"Jack",en:"Window seat, please.",ipa:"/ˈwɪndəʊ siːt pliːz/",zh:"靠窗，谢谢。"},
+    {sp:"Staff",en:"This bag is overweight.",ipa:"/ðɪs bæɡ ɪz ˌəʊvəˈweɪt/",zh:"这个箱子超重了。"},
+    {sp:"Jack",en:"What are my options?",ipa:"/wɒt ə maɪ ˈɒpʃənz/",zh:"我有哪些选择？"},
+    {sp:"Staff",en:"You can pay the excess baggage fee, or remove some items.",ipa:"/juː kæn peɪ ði ɪkˈses ˈbæɡɪdʒ fiː ɔː rɪˈmuːv sʌm ˈaɪtəmz/",zh:"您可以付超重费，或者拿出一些东西。"},
+    {sp:"Jack",en:"I'll remove some items.",ipa:"/aɪl rɪˈmuːv sʌm ˈaɪtəmz/",zh:"我拿一些东西出来。"}
+  ],
+  vocab:[
+    {t:"A",w:"departure hall",ipa:"/dɪˈpɑːtʃə hɔːl/",zh:"出发大厅",ex:"Jack entered the departure hall."},
+    {t:"A",w:"departure board",ipa:"/dɪˈpɑːtʃə bɔːd/",zh:"出发信息屏",ex:"He looked up at the departure board."},
+    {t:"A",w:"check-in counter",ipa:"/ˈtʃek ɪn ˌkaʊntə/",zh:"值机柜台",ex:"He went to the check-in counter."},
+    {t:"A",w:"booking reference",ipa:"/ˈbʊkɪŋ ˌrefərəns/",zh:"预订编号",ex:"May I see your booking reference?"},
+    {t:"A",w:"aisle seat",ipa:"/aɪl siːt/",zh:"靠过道座位",ex:"Would you like an aisle seat?"},
+    {t:"A",w:"window seat",ipa:"/ˈwɪndəʊ siːt/",zh:"靠窗座位",ex:"Window seat, please."},
+    {t:"A",w:"weight limit",ipa:"/weɪt ˈlɪmɪt/",zh:"重量限制",ex:"The weight limit is 23 kilograms."},
+    {t:"A",w:"checked baggage",ipa:"/tʃekt ˈbæɡɪdʒ/",zh:"托运行李",ex:"Your checked baggage is overweight."},
+    {t:"A",w:"overweight",ipa:"/ˌəʊvəˈweɪt/",zh:"超重",ex:"This bag is overweight."},
+    {t:"B",w:"excess baggage fee",ipa:"/ɪkˈses ˈbæɡɪdʒ fiː/",zh:"超额行李费",ex:"You can pay the excess baggage fee."},
+    {t:"A",w:"carry-on bag",ipa:"/ˈkæri ɒn bæɡ/",zh:"随身行李",ex:"He stuffed everything into his carry-on bag."},
+    {t:"A",w:"boarding pass",ipa:"/ˈbɔːdɪŋ pɑːs/",zh:"登机牌",ex:"Here's your boarding pass."},
+    {t:"A",w:"gate",ipa:"/ɡeɪt/",zh:"登机口",ex:"Your gate is Gate 71."},
+    {t:"A",w:"seat number",ipa:"/siːt ˈnʌmbə/",zh:"座位号",ex:"Your seat number is 34A."},
+    {t:"B",w:"self-service kiosk",ipa:"/self ˈsɜːvɪs ˈkiːɒsk/",zh:"自助值机机器",ex:"There was no self-service kiosk free."},
+    {t:"B",w:"online check-in",ipa:"/ˈɒnlaɪn tʃek ɪn/",zh:"网上值机",ex:"Some passengers had already done online check-in."}
+  ],
+  phrases:[
+    {en:"May I see your passport and booking reference, please?",ipa:"/meɪ aɪ siː jɔː ˈpɑːspɔːt ənd ˈbʊkɪŋ ˈrefərəns pliːz/",zh:"可以看一下您的护照和预订编号吗？"},
+    {en:"What are my options?",ipa:"/wɒt ə maɪ ˈɒpʃənz/",zh:"我有哪些选择？"},
+    {en:"I'll remove some items.",ipa:"/aɪl rɪˈmuːv sʌm ˈaɪtəmz/",zh:"我拿一些东西出来。"}
+  ]
+},
+{
+  id:3,tag:"11:20",title:"安检",en:"Security",
+  story:`Next came the <b>security checkpoint</b>. An announcement looped overhead: "Please place laptops, tablets, liquids and electronics in a separate <b>tray</b>." Jack emptied his laptop, phone, earphones, and power bank into a plastic tray. Then, from a side pocket, he pulled out a half-empty bottle of water.
+
+The security officer spotted it instantly. "Sir, you can't take that through." "Why not?" "It's over the <b>liquid</b> limit — anything above 100 millilitres has to go in the bin." "Please <b>dispose of</b> it over there." Jack looked mournfully at the bottle. "Goodbye," he said, and dropped it in.
+
+Next was the <b>metal detector</b>. "Please <b>remove</b> your belt and jacket." Jack slipped off his jacket, unbuckled his belt, and stepped through. BEEP. "Step aside, please." An officer approached with a <b>handheld scanner</b> and swept it around his waist. BEEP again. "Ah — it's your <b>belt buckle</b>." Jack took the belt off completely and walked through a second time. Silence. "<b>Bag's clear</b>. Have a good trip."
+
+He put his shoes back on, refastened his belt, and gathered his things, walking away as briskly as someone who had just escaped custody. Passing a mirror, he caught sight of himself — hair messy, shirt crooked, one shoelace still undone. "Excellent," he thought. "First international trip, and dignity is already gone."`,
+  dialogue:[
+    {sp:"Officer",en:"Please place laptops, tablets, liquids and electronics in a separate tray.",ipa:"/pliːz pleɪs ˈlæptɒps ˈtæblɪts ˈlɪkwɪdz ənd ɪˌlekˈtrɒnɪks ɪn ə ˈsepərət treɪ/",zh:"请把笔记本电脑、平板、液体和电子产品放进单独的托盘。"},
+    {sp:"Officer",en:"Sir, you can't take that through. It's over the liquid limit.",ipa:"/sɜː juː kɑːnt teɪk ðæt θruː ɪts ˈəʊvə ðə ˈlɪkwɪd ˈlɪmɪt/",zh:"先生，这个不能带过去，超过液体限量了。"},
+    {sp:"Officer",en:"Please remove your belt and jacket.",ipa:"/pliːz rɪˈmuːv jɔː belt ənd ˈdʒækɪt/",zh:"请脱下皮带和外套。"},
+    {sp:"Officer",en:"Step aside, please. It's your belt buckle.",ipa:"/step əˈsaɪd pliːz ɪts jɔː belt ˈbʌkl/",zh:"请靠边站一下，是您的皮带扣。"},
+    {sp:"Officer",en:"Bag's clear. Have a good trip.",ipa:"/bæɡz klɪə hæv ə ɡʊd trɪp/",zh:"行李检查没问题，一路顺风。"}
+  ],
+  vocab:[
+    {t:"A",w:"security checkpoint",ipa:"/sɪˈkjʊərəti ˈtʃekpɔɪnt/",zh:"安检口",ex:"Next was the security checkpoint."},
+    {t:"A",w:"tray",ipa:"/treɪ/",zh:"托盘",ex:"Put everything in a separate tray."},
+    {t:"A",w:"liquid",ipa:"/ˈlɪkwɪd/",zh:"液体",ex:"It's over the liquid limit."},
+    {t:"A",w:"dispose of",ipa:"/dɪˈspəʊz əv/",zh:"丢弃、处理掉",ex:"Please dispose of it."},
+    {t:"A",w:"bin",ipa:"/bɪn/",zh:"垃圾桶",ex:"Put it in the bin."},
+    {t:"B",w:"metal detector",ipa:"/ˈmetl dɪˌtektə/",zh:"金属探测门",ex:"He walked through the metal detector."},
+    {t:"B",w:"handheld scanner",ipa:"/ˈhændheld ˌskænə/",zh:"手持扫描仪",ex:"The officer used a handheld scanner."},
+    {t:"B",w:"belt buckle",ipa:"/belt ˈbʌkl/",zh:"皮带扣",ex:"It's your belt buckle."},
+    {t:"A",w:"remove",ipa:"/rɪˈmuːv/",zh:"脱下、取下",ex:"Please remove your belt."}
+  ],
+  phrases:[
+    {en:"Do I need to take my laptop out?",ipa:"/duː aɪ niːd tə teɪk maɪ ˈlæptɒp aʊt/",zh:"我需要把笔记本电脑拿出来吗？"},
+    {en:"Can I take this through security?",ipa:"/kæn aɪ teɪk ðɪs θruː sɪˈkjʊərəti/",zh:"这个可以过安检吗？"},
+    {en:"Where can I throw this away?",ipa:"/weər kæn aɪ θrəʊ ðɪs əˈweɪ/",zh:"我可以在哪里把这个扔掉？"}
+  ]
+},
+{
+  id:4,tag:"12:05",title:"候机区与登机",en:"Departure Area & Boarding",
+  story:`Through security at last, Jack stepped into the international <b>departure area</b>. He rode the <b>moving walkway</b> most of the way to Gate 71, and plugged his phone into a <b>charging station</b> along the way. Beside it stood a <b>duty-free shop</b>; he picked up a box of New Zealand chocolate, checked the price, and quietly put it back. "I haven't even landed in New Zealand and it's already expensive," he thought.
+
+He wandered over to a huge <b>floor-to-ceiling window</b> and found his aircraft parked on the <b>apron</b> below, a silver <b>fern</b> painted across its tail. "That's my plane," he said quietly, and for the first time the trip felt real.
+
+At 12:05, an announcement crackled through the terminal: "Flight NZ288 to Auckland is now <b>boarding</b>. Passengers in <b>priority boarding</b> and Groups 1 and 2, please proceed to Gate 71." Jack shot to his feet, then checked his boarding pass — Group 4 — and sat back down, slightly embarrassed. Ten minutes later: "Passengers in Groups 3 and 4 may now board." "Finally."
+
+At the gate, an agent scanned his ticket. "<b>Boarding pass</b> and <b>passport</b>, please." BEEP. Green light. "You're all good." Jack walked down the <b>jet bridge</b>, and at the aircraft door a <b>flight attendant</b> greeted him with a smile. "Kia ora! Welcome aboard." "Kia ora," he replied — his very first word of Māori, spoken before he'd even landed.
+
+He made his way down the aisle, past row after row, until he reached 34A — already occupied. "Excuse me. I think that's my seat." "Oh! Sorry, I'm 34B." "No worries." He wrestled his overstuffed <b>carry-on</b> toward the <b>overhead compartment</b>; it wouldn't fit. "Try turning it sideways," the flight attendant suggested. One twist later, it slid right in.
+
+The passenger beside him was a woman in her sixties, wearing a knitted hat. "First time flying <b>long-haul</b>?" she asked. "Yes. Is it that obvious?" "A little. I'm Margaret." "Jack." "Nice to meet you, Jack."`,
+  dialogue:[
+    {sp:"Announce",en:"Flight NZ288 to Auckland is now boarding.",ipa:"/flaɪt en zed tuː eɪt eɪt tə ˈɔːklənd ɪz naʊ ˈbɔːdɪŋ/",zh:"飞往奥克兰的NZ288航班开始登机。"},
+    {sp:"Agent",en:"Boarding pass and passport, please.",ipa:"/ˈbɔːdɪŋ pɑːs ənd ˈpɑːspɔːt pliːz/",zh:"请出示登机牌和护照。"},
+    {sp:"Crew",en:"Kia ora! Welcome aboard.",ipa:"/ˈkiːə ˈɔːrə ˈwelkəm əˈbɔːd/",zh:"你好！欢迎登机。"},
+    {sp:"Jack",en:"Excuse me. I think that's my seat.",ipa:"/ɪkˈskjuːz miː aɪ θɪŋk ðæts maɪ siːt/",zh:"不好意思，我想那是我的座位。"},
+    {sp:"Margaret",en:"First time flying long-haul?",ipa:"/fɜːst taɪm ˈflaɪɪŋ ˌlɒŋ ˈhɔːl/",zh:"第一次坐长途航班吗？"},
+    {sp:"Jack",en:"Yes. Is it that obvious?",ipa:"/jes ɪz ɪt ðæt ˈɒbviəs/",zh:"是的，有那么明显吗？"}
+  ],
+  vocab:[
+    {t:"A",w:"departure area",ipa:"/dɪˈpɑːtʃər ˌeəriə/",zh:"候机区",ex:"Jack entered the departure area."},
+    {t:"B",w:"moving walkway",ipa:"/ˈmuːvɪŋ ˌwɔːkweɪ/",zh:"自动步道",ex:"He took the moving walkway."},
+    {t:"B",w:"duty-free shop",ipa:"/ˌdjuːti ˈfriː ʃɒp/",zh:"免税店",ex:"He walked into the duty-free shop."},
+    {t:"B",w:"apron",ipa:"/ˈeɪprən/",zh:"停机坪",ex:"The aircraft was on the apron."},
+    {t:"B",w:"fern",ipa:"/fɜːn/",zh:"蕨叶（新西兰标志）",ex:"There was a silver fern on the tail."},
+    {t:"A",w:"boarding",ipa:"/ˈbɔːdɪŋ/",zh:"登机",ex:"The flight is now boarding."},
+    {t:"B",w:"jet bridge",ipa:"/dʒet brɪdʒ/",zh:"登机廊桥",ex:"Jack walked through the jet bridge."},
+    {t:"A",w:"flight attendant",ipa:"/flaɪt əˈtendənt/",zh:"空乘",ex:"A flight attendant greeted him."},
+    {t:"A",w:"overhead compartment",ipa:"/ˌəʊvəhed kəmˈpɑːtmənt/",zh:"头顶行李舱",ex:"Put your bag in the overhead compartment."},
+    {t:"A",w:"long-haul flight",ipa:"/ˌlɒŋ ˈhɔːl flaɪt/",zh:"长途航班",ex:"First time flying long-haul?"},
+    {t:"B",w:"priority boarding",ipa:"/praɪˈɒrəti ˈbɔːdɪŋ/",zh:"优先登机",ex:"Passengers in priority boarding may board first."}
+  ],
+  phrases:[
+    {en:"Excuse me. I think that's my seat.",ipa:"/ɪkˈskjuːz miː aɪ θɪŋk ðæts maɪ siːt/",zh:"不好意思，我想那是我的座位。"},
+    {en:"Try turning it sideways.",ipa:"/traɪ ˈtɜːnɪŋ ɪt ˈsaɪdweɪz/",zh:"试着侧过来放。"},
+    {en:"Is it that obvious?",ipa:"/ɪz ɪt ðæt ˈɒbviəs/",zh:"有那么明显吗？"}
+  ]
+},
+{
+  id:5,tag:"13:05",title:"起飞、聊天与飞机餐",en:"Take-off, Margaret & Meal Service",
+  story:`The aircraft door closed, and the captain's voice came over the speakers. "This is your <b>captain</b> speaking. Our flight time today is approximately eleven hours and thirty minutes. We'll be <b>cruising</b> at an <b>altitude</b> of 38,000 feet." Jack mostly caught the numbers.
+
+"Please <b>fasten</b> your <b>seat belts</b>," a flight attendant announced. "Please switch your electronic devices to <b>airplane mode</b>." Outside, the <b>ground crew</b> was still loading the last of the luggage. The plane began <b>taxiing</b>, rolling slowly toward the <b>runway</b>. The engines suddenly roared. The plane accelerated — and then, smoothly, it <b>took off</b>.
+
+Once the seatbelt sign switched off, Margaret struck up a conversation. "<b>What brings you to</b> Auckland?" "I'm moving to New Zealand." "That's exciting." "I'm heading home to Christchurch myself," she said. "If you ever go to the West Coast, watch out for the <b>sandflies</b>." "Sandflies?" "Tiny insects. Very annoying." "Great," Jack said. "One more thing to worry about."
+
+Before long, the crew wheeled a <b>meal cart</b> down the aisle. "Chicken or <b>lamb</b>?" "Lamb, please." "Something to drink?" "<b>Still or sparkling</b>?" "Sorry?" "Still water or sparkling water?" "Oh — still water, please." "Could I have a glass of <b>red wine</b> as well?" "Of course." Margaret glanced at his tray. "How is it?" "Better than expected." "That," she said, "means it's good airline food."`,
+  dialogue:[
+    {sp:"Captain",en:"This is your captain speaking. We'll be cruising at an altitude of 38,000 feet.",ipa:"/ðɪs ɪz jɔː ˈkæptɪn ˈspiːkɪŋ wiːl biː ˈkruːzɪŋ æt ən ˈæltɪtjuːd əv ˈθɜːti eɪt ˈθaʊzənd fiːt/",zh:"这里是机长广播，我们将以38000英尺高度巡航。"},
+    {sp:"Margaret",en:"What brings you to Auckland?",ipa:"/wɒt brɪŋz juː tə ˈɔːklənd/",zh:"什么原因让你来奥克兰？"},
+    {sp:"Jack",en:"I'm moving to New Zealand.",ipa:"/aɪm ˈmuːvɪŋ tə njuː ˈziːlənd/",zh:"我要搬去新西兰住。"},
+    {sp:"Crew",en:"Chicken or lamb?",ipa:"/ˈtʃɪkɪn ɔː læm/",zh:"鸡肉还是羊肉？"},
+    {sp:"Crew",en:"Still or sparkling?",ipa:"/stɪl ɔː ˈspɑːklɪŋ/",zh:"无气还是有气泡水？"},
+    {sp:"Jack",en:"Could I have a glass of red wine, please?",ipa:"/kʊd aɪ hæv ə ɡlɑːs əv red waɪn pliːz/",zh:"可以给我一杯红酒吗？"}
+  ],
+  vocab:[
+    {t:"A",w:"captain",ipa:"/ˈkæptɪn/",zh:"机长",ex:"This is your captain speaking."},
+    {t:"A",w:"fasten your seat belt",ipa:"/ˈfɑːsən jɔː ˈsiːt belt/",zh:"系好安全带",ex:"Please fasten your seat belt."},
+    {t:"A",w:"airplane mode",ipa:"/ˈeəpleɪn məʊd/",zh:"飞行模式",ex:"Switch to airplane mode."},
+    {t:"B",w:"ground crew",ipa:"/ɡraʊnd kruː/",zh:"地勤人员",ex:"Ground crew loaded the luggage."},
+    {t:"A",w:"runway",ipa:"/ˈrʌnweɪ/",zh:"跑道",ex:"The plane moved toward the runway."},
+    {t:"A",w:"take off",ipa:"/teɪk ɒf/",zh:"起飞",ex:"The plane took off."},
+    {t:"A",w:"What brings you to…?",ipa:"/wɒt brɪŋz juː tə/",zh:"什么原因让你来……？",ex:"What brings you to Auckland?"},
+    {t:"B",w:"sandflies",ipa:"/ˈsændflaɪz/",zh:"沙蝇",ex:"Watch out for the sandflies."},
+    {t:"A",w:"lamb",ipa:"/læm/",zh:"羊肉",ex:"Chicken or lamb?"},
+    {t:"A",w:"still water",ipa:"/stɪl ˈwɔːtə/",zh:"无气泡水",ex:"Still water, please."},
+    {t:"A",w:"sparkling water",ipa:"/ˈspɑːklɪŋ ˈwɔːtə/",zh:"气泡水",ex:"Still or sparkling?"},
+    {t:"A",w:"red wine",ipa:"/red waɪn/",zh:"红酒",ex:"Could I have a glass of red wine?"}
+  ],
+  phrases:[
+    {en:"What brings you to Auckland?",ipa:"/wɒt brɪŋz juː tə ˈɔːklənd/",zh:"什么原因让你来奥克兰？"},
+    {en:"Could I have a glass of red wine, please?",ipa:"/kʊd aɪ hæv ə ɡlɑːs əv red waɪn pliːz/",zh:"可以给我一杯红酒吗？"},
+    {en:"Still or sparkling?",ipa:"/stɪl ɔː ˈspɑːklɪŋ/",zh:"无气还是有气泡的？"}
+  ]
+},
+{
+  id:6,tag:"14:30",title:"漫长的飞行夜",en:"The Long Night",
+  story:`After the meal service, the cabin lights dimmed. Jack switched on the <b>seat-back screen</b> and browsed the <b>in-flight entertainment</b> system. Out of curiosity, he tapped open the <b>flight map</b>: Time remaining — 8 hours 47 minutes. "That was a mistake," he thought, and closed it immediately.
+
+"Excuse me — do you mind if I <b>recline</b> my seat?" he asked the passenger behind him. "No problem." He pulled on an <b>eye mask</b>, wrapped himself in a <b>blanket</b>, and closed his eyes.
+
+DING. The <b>seatbelt sign</b> lit up. "We're experiencing some <b>turbulence</b>. Please return to your seats and fasten your seat belts." Beside him, Margaret was already fast asleep, letting out a faint, contented <b>snoring</b> sound.
+
+A few hours later, Jack woke up and went looking for the toilet. One door read <b>OCCUPIED</b>, the other <b>VACANT</b>. "Very useful English," he thought. On his way back from the <b>lavatory</b>, he pressed the <b>call button</b>. "Could I have a cup of tea, please? And do you have any <b>snacks</b>?" "We have peanuts, pretzels and biscuits." "Peanuts, please." "Anything else?" "No, thanks. <b>That's all</b>." It was, he decided, a wonderfully useful little phrase.`,
+  dialogue:[
+    {sp:"Jack",en:"Excuse me. Do you mind if I recline my seat?",ipa:"/ɪkˈskjuːz miː duː juː maɪnd ɪf aɪ rɪˈklaɪn maɪ siːt/",zh:"不好意思，我把椅背往后放一点可以吗？"},
+    {sp:"Crew",en:"We're experiencing some turbulence. Please return to your seats.",ipa:"/wɪər ɪkˈspɪəriənsɪŋ sʌm ˈtɜːbjələns pliːz rɪˈtɜːn tə jɔː siːts/",zh:"我们遇到一些气流颠簸，请回到座位上。"},
+    {sp:"Jack",en:"Could I have a cup of tea, please? And do you have any snacks?",ipa:"/kʊd aɪ hæv ə kʌp əv tiː pliːz ənd duː juː hæv ˈeni snæks/",zh:"可以给我一杯茶吗？有零食吗？"},
+    {sp:"Crew",en:"We have peanuts, pretzels and biscuits.",ipa:"/wiː hæv ˈpiːnʌts ˈpretsəlz ənd ˈbɪskɪts/",zh:"我们有花生、椒盐脆饼和饼干。"},
+    {sp:"Jack",en:"No, thanks. That's all.",ipa:"/nəʊ θæŋks ðæts ɔːl/",zh:"不用了，谢谢，就这些。"}
+  ],
+  vocab:[
+    {t:"B",w:"in-flight entertainment",ipa:"/ˌɪn flaɪt ˌentəˈteɪnmənt/",zh:"机上娱乐",ex:"He opened the in-flight entertainment system."},
+    {t:"A",w:"recline",ipa:"/rɪˈklaɪn/",zh:"向后放倒椅背",ex:"Do you mind if I recline my seat?"},
+    {t:"A",w:"blanket",ipa:"/ˈblæŋkɪt/",zh:"毯子",ex:"Could I have a blanket?"},
+    {t:"A",w:"seatbelt sign",ipa:"/ˈsiːtbelt saɪn/",zh:"安全带指示灯",ex:"The seatbelt sign came on."},
+    {t:"A",w:"turbulence",ipa:"/ˈtɜːbjələns/",zh:"气流颠簸",ex:"We're experiencing some turbulence."},
+    {t:"A",w:"lavatory",ipa:"/ˈlævətri/",zh:"飞机厕所",ex:"He went to the lavatory."},
+    {t:"A",w:"occupied / vacant",ipa:"/ˈɒkjupaɪd/ /ˈveɪkənt/",zh:"有人/空着",ex:"The lavatory was occupied."},
+    {t:"A",w:"call button",ipa:"/kɔːl ˈbʌtən/",zh:"呼叫按钮",ex:"He pressed the call button."},
+    {t:"A",w:"snack",ipa:"/snæk/",zh:"零食",ex:"Do you have any snacks?"},
+    {t:"A",w:"That's all",ipa:"/ðæts ɔːl/",zh:"就这些",ex:"No, thanks. That's all."}
+  ],
+  phrases:[
+    {en:"Do you mind if I recline my seat?",ipa:"/duː juː maɪnd ɪf aɪ rɪˈklaɪn maɪ siːt/",zh:"我把椅背往后放一点可以吗？"},
+    {en:"Could I have a blanket and a pillow?",ipa:"/kʊd aɪ hæv ə ˈblæŋkɪt ənd ə ˈpɪləʊ/",zh:"可以给我一条毯子和一个枕头吗？"},
+    {en:"No, thanks. That's all.",ipa:"/nəʊ θæŋks ðæts ɔːl/",zh:"不用了，谢谢，就这些。"}
+  ]
+},
+{
+  id:7,tag:"23:30",title:"新西兰旅客申报",en:"New Zealand Traveller Declaration",
+  story:`As the flight neared Auckland, Margaret woke up and stretched. "You've done your <b>New Zealand Traveller Declaration</b>?" she asked. Jack pulled out his phone and opened the <b>NZTD</b> app. It asked for his full name, date of birth, passport number, flight number, <b>occupation</b>, <b>purpose of travel</b>, and his <b>address</b> in New Zealand.
+
+Then came the most important section: Are you bringing any <b>food</b> into New Zealand? Jack thought of the tea, the snacks, the hotpot seasoning — and the apple in his bag. He tapped YES. Next: Any <b>outdoor equipment</b>, including hiking boots? YES again.
+
+Margaret glanced over his shoulder. "If you're not sure, <b>declare</b> it." "That's the rule?" "That's a very good rule." Jack tapped submit, and suddenly the packet of hotpot seasoning felt less like a snack and more like an international incident.`,
+  dialogue:[
+    {sp:"Margaret",en:"You've done your New Zealand Traveller Declaration?",ipa:"/juːv dʌn jɔː njuː ˈziːlənd ˈtrævələr ˌdekləˈreɪʃən/",zh:"你填过新西兰旅客申报了吗？"},
+    {sp:"Jack",en:"If you're not sure, declare it?",ipa:"/ɪf jʊə nɒt ʃʊə dɪˈkleər ɪt/",zh:"不确定的话就申报？"},
+    {sp:"Margaret",en:"That's a very good rule.",ipa:"/ðæts ə ˈveri ɡʊd ruːl/",zh:"这是个非常好的规则。"}
+  ],
+  vocab:[
+    {t:"A",w:"declaration",ipa:"/ˌdekləˈreɪʃən/",zh:"申报",ex:"He completed his declaration."},
+    {t:"A",w:"declare",ipa:"/dɪˈkleə/",zh:"申报",ex:"If you're not sure, declare it."},
+    {t:"B",w:"occupation",ipa:"/ˌɒkjuˈpeɪʃən/",zh:"职业",ex:"The form asked for his occupation."},
+    {t:"A",w:"purpose of travel",ipa:"/ˈpɜːpəs əv ˈtrævəl/",zh:"旅行目的",ex:"He entered his purpose of travel."},
+    {t:"A",w:"address",ipa:"/əˈdres/",zh:"地址",ex:"He entered his Auckland address."},
+    {t:"A",w:"food",ipa:"/fuːd/",zh:"食品",ex:"Are you bringing any food?"},
+    {t:"B",w:"outdoor equipment",ipa:"/ˈaʊtdɔːr ɪˌkwɪpmənt/",zh:"户外装备",ex:"Any outdoor equipment?"},
+    {t:"A",w:"submit",ipa:"/səbˈmɪt/",zh:"提交",ex:"Jack submitted the declaration."}
+  ],
+  phrases:[
+    {en:"If you're not sure, declare it.",ipa:"/ɪf jʊə nɒt ʃʊə dɪˈkleər ɪt/",zh:"不确定的话就申报。"},
+    {en:"Do I need to declare this?",ipa:"/duː aɪ niːd tə dɪˈkleə ðɪs/",zh:"我需要申报这个吗？"},
+    {en:"I'm not sure whether I need to declare this.",ipa:"/aɪm nɒt ʃʊər ˈweðər aɪ niːd tə dɪˈkleə ðɪs/",zh:"我不确定是否需要申报这个。"}
+  ]
+},
+{
+  id:8,tag:"01:15",title:"降落",en:"Descent & Landing",
+  story:`An announcement rang out again. "We will shortly begin our <b>descent</b> into Auckland." Jack lifted his <b>window shade</b>. Outside there was only cloud at first, then it broke apart to reveal sea, green land, roads, and rooftops. Margaret pointed. "That's Auckland."
+
+The plane lowered its <b>landing gear</b>, and a faint tremor ran through the cabin. "Please fasten your seat belts and ensure your tray tables are <b>stowed</b>." Lower and lower the plane came. THUMP. The wheels touched the <b>runway</b>.
+
+Margaret turned to him and smiled. "Welcome to New Zealand." Jack grinned back. "Thank you."`,
+  dialogue:[
+    {sp:"Captain",en:"We will shortly begin our descent into Auckland.",ipa:"/wiː wɪl ˈʃɔːtli bɪˈɡɪn aʊər dɪˈsent ˈɪntə ˈɔːklənd/",zh:"我们即将开始下降进入奥克兰。"},
+    {sp:"Margaret",en:"That's Auckland.",ipa:"/ðæts ˈɔːklənd/",zh:"那就是奥克兰。"},
+    {sp:"Margaret",en:"Welcome to New Zealand.",ipa:"/ˈwelkəm tə njuː ˈziːlənd/",zh:"欢迎来到新西兰。"}
+  ],
+  vocab:[
+    {t:"B",w:"descent",ipa:"/dɪˈsent/",zh:"下降",ex:"We will begin our descent."},
+    {t:"A",w:"landing",ipa:"/ˈlændɪŋ/",zh:"降落",ex:"Prepare for landing."},
+    {t:"A",w:"window shade",ipa:"/ˈwɪndəʊ ʃeɪd/",zh:"遮光板",ex:"Open your window shade."},
+    {t:"B",w:"landing gear",ipa:"/ˈlændɪŋ ɡɪə/",zh:"起落架",ex:"The plane lowered its landing gear."},
+    {t:"B",w:"stowed",ipa:"/stəʊd/",zh:"已收好的",ex:"Ensure your tray tables are stowed."},
+    {t:"A",w:"runway",ipa:"/ˈrʌnweɪ/",zh:"跑道",ex:"The wheels touched the runway."}
+  ],
+  phrases:[
+    {en:"Welcome to New Zealand.",ipa:"/ˈwelkəm tə njuː ˈziːlənd/",zh:"欢迎来到新西兰。"}
+  ]
+},
+{
+  id:9,tag:"01:40",title:"护照检查",en:"Passport Control",
+  story:`Off the plane, Jack followed the crowd down a long <b>arrivals corridor</b>. Ahead, the path split into two: New Zealand Citizens & Residents on one side, All Other Passengers on the other. He joined the queue for <b>passport control</b>. There was also an <b>e-gate</b> lane for eligible passport holders, but as a first-time visitor he lined up for the manned counter instead.
+
+"Passport, please." "What is the <b>purpose of your visit</b>?" "I'm moving to New Zealand." "How long are you planning to stay?" "<b>Long term</b>." "Where will you be staying?" "In Auckland." "Do you have the address?" "Yes." "Are you <b>travelling alone</b>?" "Yes." "You've completed your New Zealand Traveller Declaration?" "Yes."
+
+"<b>Everything looks fine</b>. Welcome to New Zealand." "Thank you." Jack had always imagined <b>immigration</b> as something like an interrogation. In reality, it turned out to be a short string of simple questions. The real challenge wasn't the vocabulary at all — it was reacting quickly enough when someone spoke fast.`,
+  dialogue:[
+    {sp:"Officer",en:"What is the purpose of your visit?",ipa:"/wɒt ɪz ðə ˈpɜːpəs əv jɔː ˈvɪzɪt/",zh:"你此行的目的是什么？"},
+    {sp:"Jack",en:"I'm moving to New Zealand.",ipa:"/aɪm ˈmuːvɪŋ tə njuː ˈziːlənd/",zh:"我要搬来新西兰。"},
+    {sp:"Officer",en:"Where will you be staying?",ipa:"/weə wɪl juː biː ˈsteɪɪŋ/",zh:"你会住在哪里？"},
+    {sp:"Officer",en:"Are you travelling alone?",ipa:"/ɑː juː ˈtrævəlɪŋ əˌləʊn/",zh:"你是一个人旅行吗？"},
+    {sp:"Officer",en:"Everything looks fine. Welcome to New Zealand.",ipa:"/ˈevriθɪŋ lʊks faɪn ˈwelkəm tə njuː ˈziːlənd/",zh:"一切都没问题，欢迎来到新西兰。"}
+  ],
+  vocab:[
+    {t:"A",w:"passport control",ipa:"/ˈpɑːspɔːt kənˌtrəʊl/",zh:"护照检查",ex:"Jack came to passport control."},
+    {t:"A",w:"immigration",ipa:"/ˌɪmɪˈɡreɪʃən/",zh:"入境/移民检查",ex:"He went through immigration."},
+    {t:"A",w:"purpose of visit",ipa:"/ˈpɜːpəs əv ˈvɪzɪt/",zh:"来访目的",ex:"What is the purpose of your visit?"},
+    {t:"A",w:"long term",ipa:"/ˌlɒŋ ˈtɜːm/",zh:"长期",ex:"I'm planning to stay long term."},
+    {t:"A",w:"travelling alone",ipa:"/ˈtrævəlɪŋ əˌləʊn/",zh:"独自旅行",ex:"Are you travelling alone?"},
+    {t:"B",w:"e-gate",ipa:"/ˈiː ɡeɪt/",zh:"电子通关闸机",ex:"There was an e-gate lane for eligible passport holders."}
+  ],
+  phrases:[
+    {en:"What is the purpose of your visit?",ipa:"/wɒt ɪz ðə ˈpɜːpəs əv jɔː ˈvɪzɪt/",zh:"你此行的目的是什么？"},
+    {en:"I'm moving to New Zealand.",ipa:"/aɪm ˈmuːvɪŋ tə njuː ˈziːlənd/",zh:"我要搬来新西兰。"},
+    {en:"Are you travelling alone?",ipa:"/ɑː juː ˈtrævəlɪŋ əˌləʊn/",zh:"你是一个人旅行吗？"}
+  ]
+},
+{
+  id:10,tag:"01:50",title:"提取行李",en:"Baggage Claim",
+  story:`Jack made his way to <b>baggage claim</b>. The screen read: NZ288 — Carousel 5. He stood by the <b>carousel</b>, watching the suitcases roll past. A black case — not his. A blue one — not his either. Then a grey one appeared. "That one!" He pulled it off the belt.
+
+"Excuse me! <b>That's my bag</b>," a stranger said behind him. Jack froze, looked down — same colour, same size, but definitely the wrong case. "<b>I am so sorry</b>." "No worries." Two minutes later, his actual suitcase appeared. This time, he checked the <b>baggage tag</b> first before touching it. "Progress," he muttered.`,
+  dialogue:[
+    {sp:"Stranger",en:"Excuse me! That's my bag.",ipa:"/ɪkˈskjuːz miː ðæts maɪ bæɡ/",zh:"不好意思！那是我的行李。"},
+    {sp:"Jack",en:"I am so sorry.",ipa:"/aɪ æm səʊ ˈsɒri/",zh:"真的很抱歉。"},
+    {sp:"Stranger",en:"No worries.",ipa:"/nəʊ ˈwʌriz/",zh:"没关系。"}
+  ],
+  vocab:[
+    {t:"A",w:"baggage claim",ipa:"/ˈbæɡɪdʒ kleɪm/",zh:"行李提取区",ex:"Jack went to baggage claim."},
+    {t:"A",w:"carousel",ipa:"/ˌkærəˈsel/",zh:"行李转盘",ex:"He waited at Carousel 5."},
+    {t:"A",w:"baggage tag",ipa:"/ˈbæɡɪdʒ tæɡ/",zh:"行李标签",ex:"He checked the baggage tag first."},
+    {t:"A",w:"luggage trolley",ipa:"/ˈlʌɡɪdʒ ˌtrɒli/",zh:"行李推车",ex:"He put the suitcase on the luggage trolley."}
+  ],
+  phrases:[
+    {en:"My bag hasn't arrived.",ipa:"/maɪ bæɡ ˈhæznt əˈraɪvd/",zh:"我的行李还没出来。"},
+    {en:"Could you check where my bag is?",ipa:"/kʊd juː tʃek weə maɪ bæɡ ɪz/",zh:"可以帮我查一下行李在哪吗？"},
+    {en:"I am so sorry.",ipa:"/aɪ æm səʊ ˈsɒri/",zh:"真的很抱歉。"}
+  ]
+},
+{
+  id:11,tag:"02:05",title:"生物安全",en:"Customs & Biosecurity",
+  story:`One last hurdle remained: Customs and Biosecurity. Ahead, the hall split into two lanes — a <b>nothing to declare</b> channel and a <b>goods to declare</b> channel. Jack, having ticked "yes" on his declaration, walked straight into the second one.
+
+"You've declared <b>food</b>?" the officer asked. "Yes." "What have you got?" "Some tea, packaged snacks, and hotpot seasoning." "Is everything <b>commercially packaged</b>?" "I think so." "Any <b>fresh fruit</b>?" Jack's stomach dropped — the apple. "Yes. One apple." "You'll need to <b>dispose of</b> that." "No problem." "Any meat, <b>dairy</b>, <b>honey</b>, <b>plants</b>, or <b>seeds</b>?" "No." "Any outdoor equipment?" "Yes, hiking boots." "Any <b>soil</b> or <b>mud</b> on them?" "I don't think so." "Let's have a look."
+
+Jack set the boots down on the <b>inspection table</b>. Sure enough, a small patch of dried mud clung to one heel. The officer wiped it clean. "That's fine." Jack, remembering the hotpot seasoning again, couldn't resist asking. "I'm not sure about this one — is it <b>allowed</b>?" "You did the right thing by declaring it." A sentence, Jack decided, worth remembering.`,
+  dialogue:[
+    {sp:"Officer",en:"You've declared food? What have you got?",ipa:"/juːv dɪˈkleəd fuːd wɒt hæv juː ɡɒt/",zh:"你申报了食物？有什么东西？"},
+    {sp:"Jack",en:"Some tea, packaged snacks and hotpot seasoning.",ipa:"/sʌm tiː ˈpækɪdʒd snæks ənd ˈhɒtpɒt ˈsiːzənɪŋ/",zh:"一些茶叶，包装零食和火锅底料。"},
+    {sp:"Officer",en:"Any fresh fruit?",ipa:"/ˈeni freʃ fruːt/",zh:"有新鲜水果吗？"},
+    {sp:"Jack",en:"Yes. One apple.",ipa:"/jes wʌn ˈæpl/",zh:"有，一个苹果。"},
+    {sp:"Officer",en:"You'll need to dispose of that.",ipa:"/juːl niːd tə dɪˈspəʊz əv ðæt/",zh:"这个需要丢弃。"},
+    {sp:"Jack",en:"I'm not sure about this. Is it allowed?",ipa:"/aɪm nɒt ʃʊər əˈbaʊt ðɪs ɪz ɪt əˈlaʊd/",zh:"我不确定这个，可以带吗？"},
+    {sp:"Officer",en:"You did the right thing by declaring it.",ipa:"/juː dɪd ðə raɪt θɪŋ baɪ dɪˈkleərɪŋ ɪt/",zh:"你申报是对的。"}
+  ],
+  vocab:[
+    {t:"A",w:"customs",ipa:"/ˈkʌstəmz/",zh:"海关",ex:"He went through customs."},
+    {t:"A",w:"biosecurity",ipa:"/ˌbaɪəʊsɪˈkjʊərəti/",zh:"生物安全",ex:"New Zealand has strict biosecurity."},
+    {t:"B",w:"commercially packaged",ipa:"/kəˌmɜːʃəli ˈpækɪdʒd/",zh:"商业包装的",ex:"Is everything commercially packaged?"},
+    {t:"A",w:"fresh fruit",ipa:"/freʃ fruːt/",zh:"新鲜水果",ex:"Any fresh fruit?"},
+    {t:"A",w:"dairy",ipa:"/ˈdeəri/",zh:"乳制品",ex:"Any meat, dairy or honey?"},
+    {t:"A",w:"plants / seeds",ipa:"/plɑːnts/ /siːdz/",zh:"植物/种子",ex:"Any plants or seeds?"},
+    {t:"A",w:"soil / mud",ipa:"/sɔɪl/ /mʌd/",zh:"土壤/泥",ex:"Any soil or mud on them?"},
+    {t:"B",w:"inspection table",ipa:"/ɪnˈspekʃən ˌteɪbl/",zh:"检查台",ex:"Put the boots on the inspection table."},
+    {t:"A",w:"allowed",ipa:"/əˈlaʊd/",zh:"被允许的",ex:"Is this allowed?"},
+    {t:"A",w:"dispose of",ipa:"/dɪˈspəʊz əv/",zh:"丢弃",ex:"You'll need to dispose of that."},
+    {t:"B",w:"nothing to declare",ipa:"/ˈnʌθɪŋ tə dɪˈkleə/",zh:"无申报通道",ex:"He walked into the nothing to declare channel."},
+    {t:"B",w:"goods to declare",ipa:"/ɡʊdz tə dɪˈkleə/",zh:"有申报通道",ex:"Jack went through the goods to declare channel."}
+  ],
+  phrases:[
+    {en:"Anything to declare?",ipa:"/ˈeniθɪŋ tə dɪˈkleə/",zh:"有需要申报的吗？"},
+    {en:"Is this allowed into New Zealand?",ipa:"/ɪz ðɪs əˈlaʊd ˈɪntə njuː ˈziːlənd/",zh:"这个可以带进新西兰吗？"},
+    {en:"You did the right thing by declaring it.",ipa:"/juː dɪd ðə raɪt θɪŋ baɪ dɪˈkleərɪŋ ɪt/",zh:"你申报是对的。"}
+  ]
+},
+{
+  id:12,tag:"02:20",title:"真正进入新西兰",en:"Arrivals Hall, SIM Card & Ground Transport",
+  story:`The last door opened, and Jack pushed his <b>luggage trolley</b> into the <b>arrivals hall</b>. People everywhere — some holding up signs, some hugging, some clutching bunches of flowers. He checked his phone: No Service. "Of course," he sighed.
+
+He found a mobile phone counter and a small <b>currency exchange</b> booth beside it. "Hi, I'd like a <b>prepaid SIM card</b>." "How much <b>data</b> do you need?" "I don't know yet — could you explain the options?" The staff member ran through a few plans. "So, just to make sure, this includes data and <b>local calls</b>, right?" "That's right." "And there's no <b>contract</b>?" "No, it's prepaid." "Great, I'll take that one." "Would you like me to <b>activate</b> it for you?" "Yes, please." A few minutes later, a New Zealand network finally appeared on his screen.
+
+Now — how to actually leave the airport? Signs pointed toward Taxi, Rideshare, Airport Bus, Rental Car, and Shuttle. He walked over to the <b>information desk</b>. "Excuse me, what's the easiest way to get into the city?" "You can take the airport bus, book a rideshare, or take a taxi." "How much is a taxi, roughly?" The staff member named a price. Jack paused for exactly two seconds. "Where's the <b>airport bus</b>?" "Just outside," she said, smiling.`,
+  dialogue:[
+    {sp:"Jack",en:"Hi. I'd like a prepaid SIM card.",ipa:"/haɪ aɪd laɪk ə ˌpriːpeɪd sɪm kɑːd/",zh:"你好，我想要一张预付费手机卡。"},
+    {sp:"Staff",en:"How much data do you need?",ipa:"/haʊ mʌtʃ ˈdeɪtə duː juː niːd/",zh:"你需要多少流量？"},
+    {sp:"Jack",en:"I don't know yet. Could you explain the options?",ipa:"/aɪ dəʊnt nəʊ jet kʊd juː ɪkˈspleɪn ði ˈɒpʃənz/",zh:"我还不确定，可以介绍一下有哪些套餐吗？"},
+    {sp:"Jack",en:"So, just to make sure, this includes data and local calls, right?",ipa:"/səʊ dʒʌst tə meɪk ʃʊə ðɪs ɪnˈkluːdz ˈdeɪtə ənd ˈləʊkəl kɔːlz raɪt/",zh:"所以我确认一下，这个包含流量和本地通话，对吗？"},
+    {sp:"Jack",en:"Excuse me. What's the easiest way to get to the city?",ipa:"/ɪkˈskjuːz miː wɒts ði ˈiːzɪəst weɪ tə ɡet tə ðə ˈsɪti/",zh:"不好意思，去市区最方便的方式是什么？"},
+    {sp:"Jack",en:"Where's the airport bus?",ipa:"/weəz ði ˈeəpɔːt bʌs/",zh:"机场大巴在哪里？"}
+  ],
+  vocab:[
+    {t:"A",w:"arrivals hall",ipa:"/əˈraɪvəlz hɔːl/",zh:"到达大厅",ex:"Jack entered the arrivals hall."},
+    {t:"A",w:"prepaid SIM card",ipa:"/ˌpriːpeɪd ˈsɪm kɑːd/",zh:"预付费SIM卡",ex:"I'd like a prepaid SIM card."},
+    {t:"A",w:"data",ipa:"/ˈdeɪtə/",zh:"手机流量",ex:"How much data do you need?"},
+    {t:"A",w:"contract",ipa:"/ˈkɒntrækt/",zh:"合同",ex:"There's no contract."},
+    {t:"A",w:"activate",ipa:"/ˈæktɪveɪt/",zh:"激活",ex:"Could you activate it for me?"},
+    {t:"A",w:"information desk",ipa:"/ˌɪnfəˈmeɪʃən desk/",zh:"问询台",ex:"He went to the information desk."},
+    {t:"A",w:"rideshare",ipa:"/ˈraɪdʃeə/",zh:"网约车",ex:"You can book a rideshare."},
+    {t:"A",w:"airport bus",ipa:"/ˈeəpɔːt bʌs/",zh:"机场巴士",ex:"Where's the airport bus?"},
+    {t:"B",w:"shuttle",ipa:"/ˈʃʌtl/",zh:"接驳车",ex:"You can take a shuttle."},
+    {t:"B",w:"currency exchange",ipa:"/ˈkʌrənsi ɪksˈtʃeɪndʒ/",zh:"货币兑换处",ex:"There was a currency exchange booth nearby."}
+  ],
+  phrases:[
+    {en:"Could you explain the options?",ipa:"/kʊd juː ɪkˈspleɪn ði ˈɒpʃənz/",zh:"可以解释一下有哪些选择吗？"},
+    {en:"So, just to make sure…",ipa:"/səʊ dʒʌst tə meɪk ʃʊə/",zh:"所以我确认一下……"},
+    {en:"What's the easiest way to get to the city?",ipa:"/wɒts ði ˈiːzɪəst weɪ tə ɡet tə ðə ˈsɪti/",zh:"去市区最方便的方式是什么？"}
+  ]
+},
+{
+  id:13,tag:"02:50",title:"第一次进入 Auckland",en:"The First Ride Into Auckland",finalChallenge:true,
+  story:`Jack finally boarded the airport bus, hoisting both suitcases into the luggage rack. The bus pulled slowly out of the airport — cars driving on the left, green hillsides, unfamiliar road signs, a motorway, and, in the distance, a city slowly coming into view. The woman in the seat beside him turned. "First time in New Zealand?" "Is it that obvious?" "A little." That sentence again — was it really that obvious?
+
+Yesterday, New Zealand had only been a country on a map. Today it was right outside the window. Jack's English was still far from perfect — he hadn't understood every sentence, he'd asked people to repeat themselves more than once, he'd grabbed the wrong bag by mistake, the metal detector had gone off twice, and one unlucky apple had been left behind at the airport for good.
+
+And yet he had done it. He had packed his bags, checked in, passed through security, boarded the plane, ordered a meal, had a real conversation with a stranger, completed his declaration, gone through passport control, collected his luggage, cleared biosecurity, bought a SIM card, and — finally — found his way into Auckland.
+
+Jack leaned back against the seat and it suddenly struck him: real fluency was never about understanding every single word. It was about knowing what to do next, even when you didn't.`,
+  dialogue:[
+    {sp:"Passenger",en:"First time in New Zealand?",ipa:"/fɜːst taɪm ɪn njuː ˈziːlənd/",zh:"第一次来新西兰吗？"},
+    {sp:"Jack",en:"Is it that obvious?",ipa:"/ɪz ɪt ðæt ˈɒbviəs/",zh:"有那么明显吗？"},
+    {sp:"Passenger",en:"A little.",ipa:"/ə ˈlɪtl/",zh:"有一点。"}
+  ],
+  vocab:[],
+  phrases:[
+    {en:"Even when I don't understand everything, I know how to keep the conversation moving.",ipa:"—",zh:"即使我不是每句都听懂，我也知道怎么让对话继续下去。"}
+  ]
+},
+{
+  id:14,tag:"BONUS",title:"航班延误与取消",en:"Delayed and Cancelled Flights",
+  story:`Three months later, Jack flew back to Shanghai for a short visit — mostly to collect the rest of his winter clothes, and, if he was honest, to eat some real hotpot. The trip out had been easy. The trip back was a different story.
+
+He arrived at the airport with plenty of time to spare, found his gate, and settled in with a coffee. Then the <b>departure board</b> flickered, and the word next to his flight number changed from ON TIME to <b>DELAYED</b>. A few minutes later, an announcement rolled through the terminal. "We're sorry to inform passengers that flight NZ287 has been <b>delayed</b> due to a <b>technical fault</b> with the aircraft. The new <b>estimated departure time</b> is 14:40."
+
+Jack sighed and joined the small crowd already gathering at the <b>rebooking desk</b>. "Excuse me — is there any update on flight NZ287?" "It's currently delayed by ninety minutes, sir. We're monitoring the situation." "Will I still make my flight?" "At this stage, yes — but if the delay grows longer, we may need to rebook you."
+
+An hour later, the situation got worse. The screen changed again — this time to <b>CANCELLED</b>. A collective groan rose from the waiting area. Jack made his way back to the counter. "I understand my flight has been cancelled. What are my options?" The <b>ground staff</b> member typed quickly. "We can offer you a seat on the <b>next available flight</b> tomorrow morning, or, if you prefer, we can look at flights with a different airline. Since this delay was within our control, we'll also provide a <b>meal voucher</b> and <b>overnight accommodation</b> at a nearby hotel." "That would be great, thank you." "You'll also be entitled to <b>compensation</b> under the regulations — here's a form you can fill in." "Could I get a copy of the new <b>boarding pass</b> once it's confirmed?" "Of course. I'll email it to you as well, just in case."
+
+Jack picked up his hotel voucher and looked at the departure board one last time. NZ287 — CANCELLED. Underneath, a queue of new passengers was already forming, all reading the same word with the same tired expression he'd had an hour ago. "Well," he thought, "at least now I know exactly what to say."`,
+  dialogue:[
+    {sp:"Announce",en:"Flight NZ287 has been delayed due to a technical fault.",ipa:"/flaɪt en zed tuː eɪt sevən hæz biːn dɪˈleɪd djuː tə ə ˈteknɪkəl fɔːlt/",zh:"NZ287航班因为机械故障延误。"},
+    {sp:"Jack",en:"Is there any update on flight NZ287?",ipa:"/ɪz ðeər ˈeni ˈʌpdeɪt ɒn flaɪt en zed tuː eɪt sevən/",zh:"NZ287航班有最新消息吗？"},
+    {sp:"Staff",en:"We may need to rebook you if the delay grows longer.",ipa:"/wiː meɪ niːd tə ˌriːˈbʊk juː ɪf ðə dɪˈleɪ ɡrəʊz ˈlɒŋɡə/",zh:"如果延误时间变长，我们可能需要给您重新订票。"},
+    {sp:"Jack",en:"I understand my flight has been cancelled. What are my options?",ipa:"/aɪ ˌʌndəˈstænd maɪ flaɪt hæz biːn ˈkænsəld wɒt ə maɪ ˈɒpʃənz/",zh:"我了解到我的航班被取消了，我有哪些选择？"},
+    {sp:"Staff",en:"We can offer you a seat on the next available flight.",ipa:"/wiː kæn ˈɒfər juː ə siːt ɒn ðə nekst əˈveɪləbl flaɪt/",zh:"我们可以给您安排下一班可用的航班。"},
+    {sp:"Staff",en:"We'll provide a meal voucher and overnight accommodation.",ipa:"/wiːl prəˈvaɪd ə miːl ˈvaʊtʃər ənd ˌəʊvəˈnaɪt əˌkɒməˈdeɪʃən/",zh:"我们会提供餐食券和当晚的住宿。"},
+    {sp:"Jack",en:"Could I get a copy of the new boarding pass?",ipa:"/kʊd aɪ ɡet ə ˈkɒpi əv ðə njuː ˈbɔːdɪŋ pɑːs/",zh:"可以给我一份新登机牌的副本吗？"}
+  ],
+  vocab:[
+    {t:"A",w:"delayed",ipa:"/dɪˈleɪd/",zh:"延误的",ex:"Flight NZ287 has been delayed."},
+    {t:"A",w:"cancelled",ipa:"/ˈkænsəld/",zh:"取消的",ex:"The screen changed to CANCELLED."},
+    {t:"B",w:"technical fault",ipa:"/ˈteknɪkəl fɔːlt/",zh:"机械/技术故障",ex:"The delay was due to a technical fault."},
+    {t:"A",w:"estimated departure time",ipa:"/ˈestɪmeɪtɪd dɪˈpɑːtʃə taɪm/",zh:"预计起飞时间",ex:"The new estimated departure time is 14:40."},
+    {t:"A",w:"rebooking desk",ipa:"/ˌriːˈbʊkɪŋ desk/",zh:"改签柜台",ex:"A crowd gathered at the rebooking desk."},
+    {t:"A",w:"ground staff",ipa:"/ɡraʊnd stɑːf/",zh:"地勤工作人员",ex:"A ground staff member typed quickly."},
+    {t:"A",w:"next available flight",ipa:"/nekst əˈveɪləbl flaɪt/",zh:"下一班可用航班",ex:"We can offer you a seat on the next available flight."},
+    {t:"A",w:"meal voucher",ipa:"/miːl ˈvaʊtʃə/",zh:"餐食券",ex:"We'll also provide a meal voucher."},
+    {t:"A",w:"overnight accommodation",ipa:"/ˌəʊvəˈnaɪt əˌkɒməˈdeɪʃən/",zh:"当晚住宿",ex:"We'll provide overnight accommodation at a nearby hotel."},
+    {t:"B",w:"compensation",ipa:"/ˌkɒmpenˈseɪʃən/",zh:"赔偿",ex:"You'll be entitled to compensation."},
+    {t:"B",w:"standby",ipa:"/ˈstændbaɪ/",zh:"候补（候补乘客/候补机位）",ex:"Some passengers were put on standby."},
+    {t:"B",w:"gate change",ipa:"/ɡeɪt tʃeɪndʒ/",zh:"登机口变更",ex:"There was a last-minute gate change."}
+  ],
+  phrases:[
+    {en:"Is there any update on my flight?",ipa:"/ɪz ðeər ˈeni ˈʌpdeɪt ɒn maɪ flaɪt/",zh:"我的航班有最新消息吗？"},
+    {en:"Will I still make my connection?",ipa:"/wɪl aɪ stɪl meɪk maɪ kəˈnekʃən/",zh:"我还能赶上我的转机航班吗？"},
+    {en:"What are my options if this flight is cancelled?",ipa:"/wɒt ə maɪ ˈɒpʃənz ɪf ðɪs flaɪt ɪz ˈkænsəld/",zh:"如果这个航班被取消了，我有哪些选择？"},
+    {en:"Am I entitled to compensation?",ipa:"/æm aɪ ɪnˈtaɪtld tə ˌkɒmpenˈseɪʃən/",zh:"我可以获得赔偿吗？"}
+  ]
+},
+{
+  id:15,tag:"BONUS",title:"转机与联程航班",en:"Connecting Flights & Transit",
+  story:`On the rebooked itinerary, there was no direct flight available. Instead, Jack was routed through Sydney — a two-hour flight from Shanghai, followed by a <b>layover</b>, then a <b>connecting flight</b> on to Auckland. It was his first time being a <b>transit passenger</b>, and he had no idea what to expect.
+
+At the check-in counter in Shanghai, the agent reassured him. "Your bags are <b>checked through</b> to Auckland, so you won't need to collect them in Sydney — just follow the signs for <b>transit passengers</b> when you land." "So I don't need to go through customs there?" "That's right, as long as you're not leaving the <b>transit area</b>."
+
+The flight to Sydney landed on time, and Jack followed a sign that read TRANSIT / CONNECTING FLIGHTS. A large screen listed onward flights, and he found his: NZ134 to Auckland, Gate 22, boarding in fifty minutes. "Plenty of time," he thought — until he checked the <b>minimum connection time</b> printed on his itinerary and realised how close it actually was.
+
+At the <b>transit desk</b>, a staff member scanned his boarding pass. "You're travelling on to Auckland?" "Yes." "Your <b>connecting flight</b> is at Gate 22 — it's about a fifteen-minute walk, so you should be fine, but I wouldn't stop for coffee." Jack laughed nervously and picked up the pace.
+
+Halfway there, an announcement echoed through the transit area: "This is a <b>final call</b> for passenger Li Ming, travelling on flight NZ134 to Auckland. Please proceed to Gate 22 immediately." Jack broke into a jog, dragging his carry-on bag behind him, silently grateful he hadn't stopped for coffee after all.
+
+He made it — just as the gate agent was closing the door. "Cutting it a bit fine there," she said, scanning his pass. "Never again," Jack panted. "Next time, I'm booking the direct flight."`,
+  dialogue:[
+    {sp:"Staff",en:"Your bags are checked through to Auckland.",ipa:"/jɔː bæɡz ɑː tʃekt θruː tə ˈɔːklənd/",zh:"您的行李会直挂到奥克兰。"},
+    {sp:"Jack",en:"So I don't need to go through customs here?",ipa:"/səʊ aɪ dəʊnt niːd tə ɡəʊ θruː ˈkʌstəmz hɪə/",zh:"所以我在这里不需要过海关？"},
+    {sp:"Staff",en:"Your connecting flight is at Gate 22.",ipa:"/jɔː kəˈnektɪŋ flaɪt ɪz æt ɡeɪt ˈtwenti tuː/",zh:"您的转机航班在22号登机口。"},
+    {sp:"Announce",en:"This is a final call for passenger Li Ming.",ipa:"/ðɪs ɪz ə ˈfaɪnl kɔːl fə ˈpæsɪndʒə liː mɪŋ/",zh:"这是给李明乘客的最后登机广播。"},
+    {sp:"Agent",en:"Cutting it a bit fine there.",ipa:"/ˈkʌtɪŋ ɪt ə bɪt faɪn ðeə/",zh:"您差点就赶不上了。"}
+  ],
+  vocab:[
+    {t:"A",w:"layover",ipa:"/ˈleɪəʊvə/",zh:"中转停留",ex:"He had a two-hour layover in Sydney."},
+    {t:"A",w:"connecting flight",ipa:"/kəˈnektɪŋ flaɪt/",zh:"转机航班",ex:"His connecting flight was at Gate 22."},
+    {t:"A",w:"transit passenger",ipa:"/ˈtrænzɪt ˈpæsɪndʒə/",zh:"转机乘客",ex:"Follow the signs for transit passengers."},
+    {t:"A",w:"checked through",ipa:"/tʃekt θruː/",zh:"（行李）直挂到目的地",ex:"Your bags are checked through to Auckland."},
+    {t:"B",w:"transit area",ipa:"/ˈtrænzɪt ˈeəriə/",zh:"转机区/中转区",ex:"You won't clear customs if you stay in the transit area."},
+    {t:"A",w:"transit desk",ipa:"/ˈtrænzɪt desk/",zh:"转机服务台",ex:"He stopped at the transit desk to confirm his gate."},
+    {t:"B",w:"minimum connection time",ipa:"/ˈmɪnɪməm kəˈnekʃən taɪm/",zh:"最短转机时间",ex:"He checked the minimum connection time on his itinerary."},
+    {t:"A",w:"final call",ipa:"/ˈfaɪnl kɔːl/",zh:"最后登机广播",ex:"This is a final call for passenger Li Ming."},
+    {t:"B",w:"final destination",ipa:"/ˈfaɪnl ˌdestɪˈneɪʃən/",zh:"最终目的地",ex:"Auckland was his final destination."},
+    {t:"B",w:"missed connection",ipa:"/mɪst kəˈnekʃən/",zh:"错过转机航班",ex:"A missed connection can mean a long wait for the next flight."}
+  ],
+  phrases:[
+    {en:"Where do I go for my connecting flight?",ipa:"/weə duː aɪ ɡəʊ fə maɪ kəˈnektɪŋ flaɪt/",zh:"我的转机航班要去哪里？"},
+    {en:"Do I need to collect my bags here?",ipa:"/duː aɪ niːd tə kəˈlekt maɪ bæɡz hɪə/",zh:"我需要在这里取行李吗？"},
+    {en:"How much time do I have to make my connection?",ipa:"/haʊ mʌtʃ taɪm duː aɪ hæv tə meɪk maɪ kəˈnekʃən/",zh:"我还有多少时间赶转机航班？"},
+    {en:"Which gate is my next flight?",ipa:"/wɪtʃ ɡeɪt ɪz maɪ nekst flaɪt/",zh:"我下一班航班在哪个登机口？"}
+  ]
+},
+{
+  id:16,tag:"BONUS",title:"误机与候补",en:"Missing Your Flight & Standby",
+  story:`Jack liked to think of himself as a punctual person. That reputation took a hit the day he stopped for one last coffee before a domestic connection — and completely lost track of time.
+
+By the time he glanced at his watch, boarding had started fifteen minutes earlier. He half-ran, half-power-walked to the gate, suitcase wheels rattling behind him, only to find the door already shut. "I'm so sorry — is this still boarding for flight MU588?" "I'm afraid the <b>gate has closed</b>, sir. Once the door is shut, we can't reopen it." "Have I <b>missed my flight</b>?" "I'm afraid so."
+
+Trying not to panic, Jack made his way to the airline's transfer desk. "I've missed my flight. What can I do?" "Was this a delay on our side, or did you arrive late?" "I arrived late — that one's on me." "In that case, you'll usually need to pay a <b>rebooking fee</b>, unless your ticket includes free changes. Let me check what's available." A pause, some typing. "There's a seat on the 4 p.m. flight. I can put you on the <b>standby list</b> for the 2 p.m. one, if you'd rather try for something sooner." "How does standby work?" "You wait at the gate, and if there's a <b>no-show</b> or an empty seat, we'll call your name."
+
+Jack decided not to push his luck twice in one day. "I'll just take the confirmed seat on the 4 p.m., thanks." "No problem. Here's your new boarding pass — and maybe skip the coffee this time." Jack laughed, a little sheepishly. "Lesson learned."`,
+  dialogue:[
+    {sp:"Jack",en:"Is this still boarding for flight MU588?",ipa:"/ɪz ðɪs stɪl ˈbɔːdɪŋ fə flaɪt em juː faɪv eɪt eɪt/",zh:"MU588航班还在登机吗？"},
+    {sp:"Agent",en:"I'm afraid the gate has closed, sir.",ipa:"/aɪm əˈfreɪd ðə ɡeɪt hæz kləʊzd sɜː/",zh:"恐怕登机口已经关闭了，先生。"},
+    {sp:"Jack",en:"I've missed my flight. What can I do?",ipa:"/aɪv mɪst maɪ flaɪt wɒt kæn aɪ duː/",zh:"我错过航班了，我该怎么办？"},
+    {sp:"Staff",en:"You'll usually need to pay a rebooking fee.",ipa:"/juːl ˈjuːʒuəli niːd tə peɪ ə ˌriːˈbʊkɪŋ fiː/",zh:"通常需要支付改签费。"},
+    {sp:"Staff",en:"I can put you on the standby list.",ipa:"/aɪ kæn pʊt juː ɒn ðə ˈstændbaɪ lɪst/",zh:"我可以把你加入候补名单。"}
+  ],
+  vocab:[
+    {t:"A",w:"miss the flight",ipa:"/mɪs ðə flaɪt/",zh:"错过航班",ex:"I've missed my flight."},
+    {t:"A",w:"gate has closed",ipa:"/ɡeɪt hæz kləʊzd/",zh:"登机口已关闭",ex:"I'm afraid the gate has closed."},
+    {t:"A",w:"rebooking fee",ipa:"/ˌriːˈbʊkɪŋ fiː/",zh:"改签费",ex:"You'll need to pay a rebooking fee."},
+    {t:"A",w:"standby list",ipa:"/ˈstændbaɪ lɪst/",zh:"候补名单",ex:"I can put you on the standby list."},
+    {t:"B",w:"no-show",ipa:"/ˈnəʊ ʃəʊ/",zh:"未出现的订位乘客",ex:"If there's a no-show, we'll call your name."},
+    {t:"B",w:"confirmed seat",ipa:"/kənˈfɜːmd siːt/",zh:"确认座位",ex:"I'll take the confirmed seat instead."}
+  ],
+  phrases:[
+    {en:"Have I missed my flight?",ipa:"/hæv aɪ mɪst maɪ flaɪt/",zh:"我是不是错过航班了？"},
+    {en:"Is there a later flight I can take?",ipa:"/ɪz ðeər ə ˈleɪtə flaɪt aɪ kæn teɪk/",zh:"有没有更晚一点的航班可以坐？"},
+    {en:"How does the standby list work?",ipa:"/haʊ dʌz ðə ˈstændbaɪ lɪst wɜːk/",zh:"候补名单是怎么运作的？"}
+  ]
+},
+{
+  id:17,tag:"BONUS",title:"行李丢失与损坏",en:"Lost or Damaged Baggage",
+  story:`Not every bag makes it. On a work trip through Guangzhou, Jack stood at the carousel long after every other passenger had collected their luggage and gone home. The belt stopped. His suitcase never appeared.
+
+He found the airline's baggage office, a small counter tucked behind an unassuming door. "Excuse me — my bag hasn't arrived. What do I do?" "Do you have your <b>baggage tag</b>?" "Yes, here." The agent typed the number into a system. "It looks like your bag was <b>misrouted</b> and is still in Shanghai. We'll get it on the next available flight." "So my bag is <b>lost</b>?" "Not lost — just delayed. We call it a <b>missing bag report</b>. I'll need your address so we can deliver it once it arrives."
+
+She filled out a form and handed him a reference number. "Here's your <b>file reference number</b> — you can use it to <b>track your bag</b> online." "How long will it take?" "Usually twenty-four to forty-eight hours. If it takes longer than five days, it may be classified as <b>permanently lost</b>, and you'd be able to make a claim."
+
+Three days later, a courier rang his doorbell, suitcase in hand. Jack checked it over carefully — one wheel looked slightly cracked. Back on the phone to the airline: "My bag was <b>damaged</b> in transit — one of the wheels is broken." "I'm sorry to hear that. Could you send us some photos? We'll process a claim for the repair or replacement cost." Jack sent the photos that evening, quietly grateful he'd photographed the suitcase, undamaged, before he'd left home.`,
+  dialogue:[
+    {sp:"Jack",en:"My bag hasn't arrived. What do I do?",ipa:"/maɪ bæɡ ˈhæznt əˈraɪvd wɒt duː aɪ duː/",zh:"我的行李没有出来，我该怎么办？"},
+    {sp:"Agent",en:"Do you have your baggage tag?",ipa:"/duː juː hæv jɔː ˈbæɡɪdʒ tæɡ/",zh:"您有行李牌吗？"},
+    {sp:"Agent",en:"It looks like your bag was misrouted.",ipa:"/ɪt lʊks laɪk jɔː bæɡ wɒz ˌmɪsˈraʊtɪd/",zh:"看起来您的行李被送错了地方。"},
+    {sp:"Agent",en:"Here's your file reference number.",ipa:"/hɪəz jɔː faɪl ˈrefrəns ˈnʌmbə/",zh:"这是您的案件编号。"},
+    {sp:"Jack",en:"My bag was damaged in transit.",ipa:"/maɪ bæɡ wɒz ˈdæmɪdʒd ɪn ˈtrænsɪt/",zh:"我的行李在运输途中损坏了。"}
+  ],
+  vocab:[
+    {t:"A",w:"missing bag report",ipa:"/ˈmɪsɪŋ bæɡ rɪˈpɔːt/",zh:"行李丢失报告",ex:"We call it a missing bag report."},
+    {t:"B",w:"misrouted",ipa:"/ˌmɪsˈraʊtɪd/",zh:"（行李）被送错地方",ex:"Your bag was misrouted."},
+    {t:"A",w:"file reference number",ipa:"/faɪl ˈrefrəns ˈnʌmbə/",zh:"案件编号",ex:"Here's your file reference number."},
+    {t:"A",w:"track your bag",ipa:"/træk jɔː bæɡ/",zh:"追踪行李位置",ex:"You can track your bag online."},
+    {t:"B",w:"permanently lost",ipa:"/ˈpɜːmənəntli lɒst/",zh:"永久性丢失",ex:"It may be classified as permanently lost."},
+    {t:"A",w:"damaged",ipa:"/ˈdæmɪdʒd/",zh:"损坏的",ex:"My bag was damaged in transit."},
+    {t:"B",w:"make a claim",ipa:"/meɪk ə kleɪm/",zh:"提出索赔",ex:"You'd be able to make a claim."}
+  ],
+  phrases:[
+    {en:"My bag hasn't arrived.",ipa:"/maɪ bæɡ ˈhæznt əˈraɪvd/",zh:"我的行李没有出来。"},
+    {en:"Could you check where my bag is?",ipa:"/kʊd juː tʃek weə maɪ bæɡ ɪz/",zh:"可以帮我查一下行李在哪吗？"},
+    {en:"My bag arrived damaged. What should I do?",ipa:"/maɪ bæɡ əˈraɪvd ˈdæmɪdʒd wɒt ʃʊd aɪ duː/",zh:"我的行李损坏了，我该怎么办？"}
+  ]
+},
+{
+  id:18,tag:"BONUS",title:"超售与拒绝登机",en:"Overbooking & Denied Boarding",
+  story:`It started with an announcement Jack had never heard before. "Ladies and gentlemen, this flight is <b>overbooked</b>. We're looking for volunteers to take a later flight in exchange for compensation." A murmur ran through the gate area.
+
+Curious, Jack wandered over to the desk. "What happens if nobody volunteers?" "If we don't get enough volunteers, we may have to <b>deny boarding</b> to some passengers, chosen according to airline policy — usually the last to check in." "And if I volunteer?" "You'd give up your seat and take the next flight, in exchange for a <b>travel voucher</b> and, since your wait is over four hours, a meal and hotel as well."
+
+Jack had nowhere urgent to be. "How much is the voucher?" "$400, plus we'll rebook you on the next available flight, which leaves in three hours." "I'll volunteer," he said, surprising himself. The gate agent smiled. "Thank you — that's one problem solved. Here's your <b>compensation</b> voucher and your new boarding pass."
+
+Three hours later, considerably richer in airline credit and mildly pleased with himself, Jack boarded his new flight. "Not bad," he thought, "for doing absolutely nothing except being willing to wait." He made a mental note: next time a gate agent asked for volunteers, he'd be the first hand up.`,
+  dialogue:[
+    {sp:"Announce",en:"This flight is overbooked. We're looking for volunteers.",ipa:"/ðɪs flaɪt ɪz ˌəʊvəˈbʊkt wɪə ˈlʊkɪŋ fə ˌvɒlənˈtɪəz/",zh:"这个航班超售了，我们正在寻找志愿者。"},
+    {sp:"Jack",en:"What happens if nobody volunteers?",ipa:"/wɒt ˈhæpənz ɪf ˈnəʊbɒdi ˌvɒlənˈtɪəz/",zh:"如果没有人愿意的话会怎样？"},
+    {sp:"Staff",en:"We may have to deny boarding to some passengers.",ipa:"/wiː meɪ hæv tə dɪˈnaɪ ˈbɔːdɪŋ tə sʌm ˈpæsɪndʒəz/",zh:"我们可能需要拒绝一些乘客登机。"},
+    {sp:"Jack",en:"I'll volunteer.",ipa:"/aɪl ˌvɒlənˈtɪə/",zh:"我愿意。"},
+    {sp:"Staff",en:"Here's your compensation voucher and new boarding pass.",ipa:"/hɪəz jɔː ˌkɒmpenˈseɪʃən ˈvaʊtʃər ənd njuː ˈbɔːdɪŋ pɑːs/",zh:"这是您的补偿券和新登机牌。"}
+  ],
+  vocab:[
+    {t:"A",w:"overbooked",ipa:"/ˌəʊvəˈbʊkt/",zh:"超售的",ex:"This flight is overbooked."},
+    {t:"A",w:"volunteer",ipa:"/ˌvɒlənˈtɪə/",zh:"自愿者/自愿",ex:"We're looking for volunteers."},
+    {t:"A",w:"deny boarding",ipa:"/dɪˈnaɪ ˈbɔːdɪŋ/",zh:"拒绝登机",ex:"We may have to deny boarding to some passengers."},
+    {t:"A",w:"travel voucher",ipa:"/ˈtrævl ˈvaʊtʃə/",zh:"旅行代金券",ex:"You'd get a travel voucher."},
+    {t:"B",w:"compensation",ipa:"/ˌkɒmpenˈseɪʃən/",zh:"赔偿",ex:"Here's your compensation voucher."},
+    {t:"B",w:"give up your seat",ipa:"/ɡɪv ʌp jɔː siːt/",zh:"让出座位",ex:"You'd give up your seat and take the next flight."}
+  ],
+  phrases:[
+    {en:"What happens if I volunteer?",ipa:"/wɒt ˈhæpənz ɪf aɪ ˌvɒlənˈtɪə/",zh:"如果我自愿的话会怎样？"},
+    {en:"What compensation would I receive?",ipa:"/wɒt ˌkɒmpenˈseɪʃən wʊd aɪ rɪˈsiːv/",zh:"我能获得什么补偿？"},
+    {en:"When is the next available flight?",ipa:"/wen ɪz ðə nekst əˈveɪləbl flaɪt/",zh:"下一班可用的航班是什么时候？"}
+  ]
+},
+{
+  id:19,tag:"BONUS",title:"特殊协助与带药登机",en:"Special Assistance & Travelling with Medication",
+  story:`Margaret, it turned out, had a sister — an elderly woman named Ruth, whom Jack ended up sitting next to on a flight the following year. Ruth used a wheelchair, and watching her move through the airport taught Jack a whole new set of vocabulary he'd never needed before.
+
+At check-in, Ruth's daughter spoke to the counter first. "My mother will need <b>wheelchair assistance</b>, both here and when we land." "No problem — I'll arrange for someone to meet you at the gate, and again after landing. Does she need help boarding early?" "Yes, please, if possible." "I'll add a note for <b>priority boarding</b>."
+
+At security, Ruth was guided through a separate lane. "We'll do a quick pat-down instead of the walk-through scanner, if that's alright," the officer explained gently. "That's fine," Ruth said, unbothered — she had clearly done this many times before.
+
+Jack, meanwhile, had his own small errand at the same checkpoint. He was carrying a course of <b>prescription medication</b> for the trip. "Sir, is this medication in your carry-on?" "Yes — could I keep it with me rather than checking it?" "Of course. Do you have a <b>doctor's note</b> or prescription with you, just in case?" "I do, actually." "Good — some countries ask to see it on arrival."
+
+Later, settled into their seats, Ruth turned to Jack. "First time flying with someone who needs a bit of help?" "Yes," Jack admitted. "I didn't realise how much thought goes into it." "Neither did I," Ruth said, "until I needed it myself."`,
+  dialogue:[
+    {sp:"Daughter",en:"My mother will need wheelchair assistance.",ipa:"/maɪ ˈmʌðər wɪl niːd ˈwiːltʃeər əˈsɪstəns/",zh:"我母亲需要轮椅协助。"},
+    {sp:"Staff",en:"I'll add a note for priority boarding.",ipa:"/aɪl æd ə nəʊt fə praɪˈɒrəti ˈbɔːdɪŋ/",zh:"我会备注一下优先登机。"},
+    {sp:"Officer",en:"We'll do a quick pat-down instead of the walk-through scanner.",ipa:"/wiːl duː ə kwɪk ˈpætdaʊn ɪnˈstedəv ðə ˈwɔːk θruː ˈskænə/",zh:"我们会用手动检查代替通过式扫描仪。"},
+    {sp:"Jack",en:"Could I keep this medication with me rather than checking it?",ipa:"/kʊd aɪ kiːp ðɪs ˌmedɪˈkeɪʃən wɪð miː ˈrɑːðər ðən ˈtʃekɪŋ ɪt/",zh:"这个药物我能随身携带而不托运吗？"},
+    {sp:"Officer",en:"Do you have a doctor's note with you?",ipa:"/duː juː hæv ə ˈdɒktəz nəʊt wɪð juː/",zh:"您带医生证明了吗？"}
+  ],
+  vocab:[
+    {t:"A",w:"wheelchair assistance",ipa:"/ˈwiːltʃeər əˈsɪstəns/",zh:"轮椅协助",ex:"My mother will need wheelchair assistance."},
+    {t:"A",w:"priority boarding",ipa:"/praɪˈɒrəti ˈbɔːdɪŋ/",zh:"优先登机",ex:"I'll add a note for priority boarding."},
+    {t:"B",w:"pat-down",ipa:"/ˈpætdaʊn/",zh:"手动安检检查",ex:"We'll do a quick pat-down."},
+    {t:"A",w:"prescription medication",ipa:"/prɪˈskrɪpʃən ˌmedɪˈkeɪʃən/",zh:"处方药",ex:"He was carrying prescription medication."},
+    {t:"A",w:"doctor's note",ipa:"/ˈdɒktəz nəʊt/",zh:"医生证明",ex:"Do you have a doctor's note with you?"},
+    {t:"B",w:"unaccompanied minor",ipa:"/ˌʌnəˈkʌmpənid ˈmaɪnə/",zh:"无人陪伴儿童",ex:"The airline has a service for unaccompanied minors."}
+  ],
+  phrases:[
+    {en:"Could you arrange wheelchair assistance, please?",ipa:"/kʊd juː əˈreɪndʒ ˈwiːltʃeər əˈsɪstəns pliːz/",zh:"可以帮忙安排轮椅协助吗？"},
+    {en:"Can I carry this medication in my hand luggage?",ipa:"/kæn aɪ ˈkæri ðɪs ˌmedɪˈkeɪʃən ɪn maɪ hænd ˈlʌɡɪdʒ/",zh:"这个药物可以放在随身行李里吗？"},
+    {en:"Is there someone who can help me board early?",ipa:"/ɪz ðeə ˈsʌmwʌn huː kæn help miː bɔːd ˈɜːli/",zh:"有人可以帮我提前登机吗？"}
+  ]
+},
+{
+  id:20,tag:"BONUS",title:"失物招领与退税",en:"Lost & Found and Tax Refund",
+  story:`Jack's last surprise of the year came in the form of an empty jacket pocket. He was already through security when he realised his phone wasn't in it. Somewhere between the check-in counter and the duty-free shop, it had vanished.
+
+He backtracked to the nearest information point. "Excuse me — I think I've lost my phone somewhere near the check-in area." "Let's check <b>lost and found</b>. Can you describe it?" "Black, with a cracked case, and a boarding pass tucked in the back." The staff member checked a small cabinet of items. "You're in luck — someone handed this in about ten minutes ago." Jack could have hugged her. "Thank you so much." "Next time, maybe a phone case with a strap," she added with a smile.
+
+With his phone safely back in his pocket, Jack still had one piece of business left before his flight — <b>duty-free</b> shopping, and this time, an actual <b>tax refund</b> to claim on an expensive watch he'd bought the week before. At the refund counter, he handed over his receipt and passport. "I'd like to claim a <b>tax refund</b> on this purchase." "Do you have the <b>tax refund form</b> stamped by customs?" "Yes, right here." "Perfect. Would you like the refund to your card, or in cash?" "Cash, please, if that's possible." "Of course. Please allow a few minutes for the transaction."
+
+Phone in one pocket, a small stack of cash in the other, Jack finally made his way to the gate — this time checking his pockets twice before boarding.`,
+  dialogue:[
+    {sp:"Jack",en:"I think I've lost my phone somewhere near the check-in area.",ipa:"/aɪ θɪŋk aɪv lɒst maɪ fəʊn ˈsʌmweər nɪə ðə tʃek ɪn ˈeəriə/",zh:"我好像把手机丢在值机区附近了。"},
+    {sp:"Staff",en:"Let's check lost and found.",ipa:"/lets tʃek lɒst ənd faʊnd/",zh:"我们去查一下失物招领处。"},
+    {sp:"Staff",en:"Someone handed this in about ten minutes ago.",ipa:"/ˈsʌmwʌn ˈhændɪd ðɪs ɪn əˈbaʊt ten ˈmɪnɪts əˈɡəʊ/",zh:"大约十分钟前有人交上来了。"},
+    {sp:"Jack",en:"I'd like to claim a tax refund on this purchase.",ipa:"/aɪd laɪk tə kleɪm ə tæks ˈriːfʌnd ɒn ðɪs ˈpɜːtʃəs/",zh:"我想为这个购买申请退税。"},
+    {sp:"Staff",en:"Do you have the tax refund form stamped by customs?",ipa:"/duː juː hæv ðə tæks ˈriːfʌnd fɔːm stæmpt baɪ ˈkʌstəmz/",zh:"您有海关盖章的退税表吗？"}
+  ],
+  vocab:[
+    {t:"A",w:"lost and found",ipa:"/lɒst ənd faʊnd/",zh:"失物招领处",ex:"Let's check lost and found."},
+    {t:"A",w:"report a lost item",ipa:"/rɪˈpɔːt ə lɒst ˈaɪtəm/",zh:"报告物品丢失",ex:"He went to report a lost item."},
+    {t:"A",w:"duty-free",ipa:"/ˌdjuːti ˈfriː/",zh:"免税的",ex:"He still had duty-free shopping to do."},
+    {t:"A",w:"tax refund",ipa:"/tæks ˈriːfʌnd/",zh:"退税",ex:"I'd like to claim a tax refund."},
+    {t:"A",w:"tax refund form",ipa:"/tæks ˈriːfʌnd fɔːm/",zh:"退税表",ex:"Do you have the tax refund form stamped by customs?"},
+    {t:"B",w:"receipt",ipa:"/rɪˈsiːt/",zh:"收据",ex:"He handed over his receipt and passport."}
+  ],
+  phrases:[
+    {en:"I think I've lost something. Can you help?",ipa:"/aɪ θɪŋk aɪv lɒst ˈsʌmθɪŋ kæn juː help/",zh:"我好像丢了东西，能帮帮我吗？"},
+    {en:"Where's the lost and found office?",ipa:"/weəz ðə lɒst ənd faʊnd ˈɒfɪs/",zh:"失物招领处在哪里？"},
+    {en:"How do I claim a tax refund?",ipa:"/haʊ duː aɪ kleɪm ə tæks ˈriːfʌnd/",zh:"我要怎么申请退税？"}
+  ]
+}
+];
+
+const rescuePhrases = [
+  {en:"Sorry?",ipa:"/ˈsɒri/",zh:"不好意思，你刚才说什么？"},
+  {en:"Could you say that again, please?",ipa:"/kʊd juː seɪ ðæt əˈɡen pliːz/",zh:"可以再说一遍吗？"},
+  {en:"Could you speak a little more slowly?",ipa:"/kʊd juː spiːk ə ˈlɪtl mɔː ˈsləʊli/",zh:"可以说慢一点吗？"},
+  {en:"I'm not sure. Could you explain that?",ipa:"/aɪm nɒt ʃʊə kʊd juː ɪkˈspleɪn ðæt/",zh:"我不太确定，可以解释一下吗？"},
+  {en:"So, just to make sure…",ipa:"/səʊ dʒʌst tə meɪk ʃʊə/",zh:"所以我确认一下……"},
+  {en:"What are my options?",ipa:"/wɒt ə maɪ ˈɒpʃənz/",zh:"我有哪些选择？"},
+  {en:"I think there's been a small mix-up.",ipa:"/aɪ θɪŋk ðeəz bɪn ə smɔːl ˈmɪks ʌp/",zh:"我觉得这里可能有点搞错了。"}
+];
+
+const challengeSteps = [
+  {en:"Take a taxi to the airport",zh:"打车去机场"},
+  {en:"Find the international terminal",zh:"找国际航站楼"},
+  {en:"Check the departure board",zh:"看出发信息屏"},
+  {en:"Check in and handle overweight baggage",zh:"办理值机，处理行李超重"},
+  {en:"Go through security",zh:"通过安检"},
+  {en:"Find the gate and board the plane",zh:"找登机口，登机"},
+  {en:"Find your seat and stow your bag",zh:"找座位，放随身行李"},
+  {en:"Chat with the passenger next to you",zh:"和邻座聊天"},
+  {en:"Order your meal and drink",zh:"点飞机餐和饮料"},
+  {en:"Ask for a blanket during turbulence",zh:"颠簸时要一条毯子"},
+  {en:"Complete the NZ Traveller Declaration",zh:"完成新西兰旅客申报"},
+  {en:"Answer questions at passport control",zh:"回答护照检查的问题"},
+  {en:"Find your bag at baggage claim",zh:"在行李转盘找到自己的箱子"},
+  {en:"Declare food at biosecurity",zh:"在生物安全检查申报食品"},
+  {en:"Buy a SIM card",zh:"买一张电话卡"},
+  {en:"Find transport into the city",zh:"找到进城的交通方式"}
+];
+
+/* ============================================================
+   STATE
+============================================================ */
+let currentScene = 0;
+const practiced = new Set(); // ids of practiced items (words/phrases)
+let totalPracticable = 0;
+
+scenes.forEach(s=>{ totalPracticable += s.vocab.length + s.phrases.length; });
+totalPracticable += rescuePhrases.length;
+
+/* ============================================================
+   SPEECH: TTS
+============================================================ */
+let voices = [];
+function loadVoices(){ voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : []; }
+if('speechSynthesis' in window){
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+function pickVoice(){
+  const pref = ['en-NZ','en-AU','en-GB','en-US'];
+  for(const p of pref){
+    const v = voices.find(v=>v.lang===p);
+    if(v) return v;
+  }
+  return voices.find(v=>v.lang && v.lang.startsWith('en')) || null;
+}
+let speechRate = 0.85;
+
+function clearWordHighlight(containerId){
+  const c = document.getElementById(containerId);
+  if(c) c.querySelectorAll('.kw.active').forEach(el=>el.classList.remove('active'));
+}
+
+function attachWordHighlighting(utter, containerId){
+  if(!containerId) return;
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const words = Array.from(container.querySelectorAll('.kw'));
+  let wi = 0;
+  utter.onstart = ()=>{ wi = 0; words.forEach(w=>w.classList.remove('active')); };
+  utter.onboundary = (e)=>{
+    if(e.name && e.name!=='word') return; // some engines only ever send 'word'
+    words.forEach(w=>w.classList.remove('active'));
+    if(words[wi]){ words[wi].classList.add('active'); }
+    wi++;
+  };
+  const origEnd = utter.onend;
+  utter.onend = (ev)=>{ words.forEach(w=>w.classList.remove('active')); if(origEnd) origEnd(ev); };
+}
+
+function speak(text, btn, highlightId){
+  if(!('speechSynthesis' in window)){
+    alert('你的浏览器不支持语音朗读功能，建议使用 Chrome 浏览器。');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const clean = text.replace(/[🔊🎤]/g,'').trim();
+  const utter = new SpeechSynthesisUtterance(clean);
+  const v = pickVoice();
+  if(v) utter.voice = v;
+  utter.rate = speechRate;
+  utter.lang = v ? v.lang : 'en-US';
+  if(btn){
+    btn.classList.add('playing');
+    const origEnd2 = utter.onend, origErr = utter.onerror;
+    utter.onend = (ev)=>{ btn.classList.remove('playing'); if(origEnd2) origEnd2(ev); };
+    utter.onerror = (ev)=>{ btn.classList.remove('playing'); if(origErr) origErr(ev); };
+  }
+  attachWordHighlighting(utter, highlightId);
+  window.speechSynthesis.speak(utter);
+}
+
+// speak with an onEnd callback, used to chain lines together for autoplay
+function speakChained(text, onEnd, highlightId){
+  if(!('speechSynthesis' in window)){ onEnd && onEnd(); return; }
+  const clean = text.replace(/[🔊🎤]/g,'').trim();
+  const utter = new SpeechSynthesisUtterance(clean);
+  const v = pickVoice();
+  if(v) utter.voice = v;
+  utter.rate = speechRate;
+  utter.lang = v ? v.lang : 'en-US';
+  const origEnd = utter.onend;
+  utter.onend = (ev)=>{ if(origEnd) origEnd(ev); onEnd && onEnd(); };
+  utter.onerror = ()=> onEnd && onEnd();
+  attachWordHighlighting(utter, highlightId);
+  window.speechSynthesis.speak(utter);
+}
+
+/* ---- Autoplay: listen-through mode for a scene's dialogue ---- */
+let autoplay = {playing:false, index:0, lines:null, containerEl:null, timer:null};
+
+function stopAutoplay(){
+  if(autoplay.timer){ clearTimeout(autoplay.timer); autoplay.timer=null; }
+  if('speechSynthesis' in window) window.speechSynthesis.cancel();
+  if(autoplay.containerEl){
+    autoplay.containerEl.querySelectorAll('.dlg-line').forEach(el=>el.classList.remove('dlg-active'));
+  }
+  autoplay = {playing:false, index:0, lines:null, containerEl:null, timer:null};
+  const btn = document.getElementById('autoplayBtn');
+  if(btn){ btn.textContent = '▶ 自动播放整段对话'; btn.classList.remove('playing'); }
+}
+
+function playAutoplayLine(){
+  if(!autoplay.playing) return;
+  const {index, lines, containerEl} = autoplay;
+  if(index >= lines.length){ stopAutoplay(); return; }
+  const lineEls = containerEl.querySelectorAll('.dlg-line');
+  lineEls.forEach(el=>el.classList.remove('dlg-active'));
+  const lineEl = lineEls[index];
+  let hwId = null;
+  if(lineEl){
+    lineEl.classList.add('dlg-active');
+    lineEl.scrollIntoView({behavior:'smooth', block:'center'});
+    const kwLine = lineEl.querySelector('.kw-line');
+    if(kwLine) hwId = kwLine.id;
+  }
+  speakChained(lines[index].en, ()=>{
+    if(!autoplay.playing) return;
+    autoplay.timer = setTimeout(()=>{
+      autoplay.index++;
+      playAutoplayLine();
+    }, 600);
+  }, hwId);
+}
+
+function toggleAutoplay(lines, containerEl){
+  if(autoplay.playing){ stopAutoplay(); return; }
+  autoplay = {playing:true, index:0, lines, containerEl, timer:null};
+  const btn = document.getElementById('autoplayBtn');
+  if(btn){ btn.textContent = '⏸ 停止播放'; btn.classList.add('playing'); }
+  playAutoplayLine();
+}
+
+/* ============================================================
+   SPEECH: RECOGNITION + SCORING
+============================================================ */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognizer = null;
+if(SR){
+  recognizer = new SR();
+  recognizer.lang = 'en-US';
+  recognizer.interimResults = false;
+  recognizer.maxAlternatives = 1;
+}
+let activeMicBtn = null;
+let sessionOn = false;
+let captureActive = false;
+let captureBuffer = '';
+let captureTarget = null; // {id, targetText, btn, fb}
+let captureTimer = null;
+
+function setMicStatus(state, text){
+  const btn = document.getElementById('micStatusBtn');
+  const txt = document.getElementById('micStatusText');
+  if(!btn) return;
+  btn.classList.remove('granted','denied');
+  if(state) btn.classList.add(state);
+  txt.textContent = text;
+}
+
+function startSession(){
+  if(!recognizer){ setMicStatus('denied','当前浏览器不支持语音识别（建议用 Chrome）'); return; }
+  if(sessionOn) return;
+  recognizer.continuous = true;
+  recognizer.interimResults = true;
+  sessionOn = true;
+  setMicStatus(null,'正在请求麦克风权限，请在弹窗中选择 "Allow while visiting the site"…');
+  try{ recognizer.start(); }catch(e){ /* already running */ }
+}
+
+if(recognizer){
+  recognizer.onstart = ()=>{ setMicStatus('granted','跟读模式已开启 · 直接点🎤练习，整节课无需再次授权'); };
+  recognizer.onend = ()=>{
+    if(sessionOn){
+      try{ recognizer.start(); }catch(e){} // auto-restart, keeps the single grant alive
+    }
+  };
+  recognizer.onerror = (e)=>{
+    if(e.error==='not-allowed' || e.error==='service-not-allowed'){
+      sessionOn = false;
+      setMicStatus('denied','麦克风权限被拒绝，点击这里重新开启');
+      if(captureActive) finishCapture();
+      return;
+    }
+    // no-speech / aborted / network -> onend will auto-restart the session
+  };
+  recognizer.onresult = (event)=>{
+    if(!captureActive) return;
+    let text = '';
+    for(let i=event.resultIndex; i<event.results.length; i++){
+      text += event.results[i][0].transcript;
+    }
+    captureBuffer = text;
+    if(captureTarget && captureTarget.fb){
+      const live = captureTarget.fb.querySelector('.live-transcript');
+      if(live) live.textContent = text ? ('👂 '+text) : '';
+    }
+  };
+}
+
+function finishCapture(){
+  if(!captureActive || !captureTarget) return;
+  captureActive = false;
+  if(captureTimer){ clearTimeout(captureTimer); captureTimer = null; }
+  const {id, targetText, btn, fb} = captureTarget;
+  btn.classList.remove('recording');
+  const heard = captureBuffer.trim();
+  captureTarget = null;
+  if(!heard){
+    fb.className = 'feedback show bad';
+    fb.innerHTML = '没有听到声音，请靠近麦克风，再点一次 🎤 重试。';
+    return;
+  }
+  const score = similarity(targetText, heard);
+  let cls='bad', head='再试一次，注意每个单词的发音，红色的字母是没读准的地方。';
+  if(score>=85){cls='good'; head='发音很棒！匹配度 '+score+'%'; practiced.add(id); updateProgress();}
+  else if(score>=60){cls='ok'; head='基本到位，匹配度 '+score+'%，看看下面哪个词/字母偏了。'; practiced.add(id); updateProgress();}
+  else{head='匹配度 '+score+'%，'+head;}
+  const diffHTML = buildDiffView(targetText, heard);
+  fb.className = 'feedback show '+cls;
+  fb.innerHTML = '<div class="fb-head">'+head+'</div>' + diffHTML;
+}
+
+async function practiceItem(id, targetText, micBtn, feedbackEl){
+  if(!recognizer){
+    feedbackEl.className = 'feedback show ok';
+    feedbackEl.innerHTML = '当前浏览器不支持语音识别（建议用 Chrome）。你仍然可以点🔊多听几遍，自己对照练习发音。';
+    return;
+  }
+  // same button clicked again while it's the active capture -> stop early and score now
+  if(captureActive && captureTarget && captureTarget.id===id){
+    finishCapture();
+    return;
+  }
+  // switching to a new item mid-capture -> score the previous one first
+  if(captureActive) finishCapture();
+
+  if(!sessionOn){
+    startSession();
+    feedbackEl.className = 'feedback show ok';
+    feedbackEl.innerHTML = '首次使用，正在请求麦克风权限……授权后请再点一次 🎤 开始跟读（这是整节课唯一一次弹窗）。';
+    return;
+  }
+
+  micBtn.classList.add('recording');
+  feedbackEl.className = 'feedback show ok';
+  feedbackEl.innerHTML = '🎙️ 正在听……请朗读：<i>' + targetText + '</i>（说完再点一次可立即打分，或等待自动停止）<div class="live-transcript"></div>';
+  captureBuffer = '';
+  captureTarget = {id, targetText, btn:micBtn, fb:feedbackEl};
+  captureActive = true;
+  const words = targetText.split(/\s+/).length;
+  const windowMs = Math.min(9000, Math.max(3200, words*480 + 1800));
+  captureTimer = setTimeout(finishCapture, windowMs);
+}
+
+function normalize(s){
+  return s.toLowerCase().replace(/[^a-z0-9' ]/g,'').replace(/\s+/g,' ').trim();
+}
+function levenshtein(a,b){
+  const m=a.length, n=b.length;
+  const dp = Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++) dp[i][0]=i;
+  for(let j=0;j<=n;j++) dp[0][j]=j;
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      dp[i][j] = a[i-1]===b[j-1] ? dp[i-1][j-1] : 1+Math.min(dp[i-1][j-1],dp[i-1][j],dp[i][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+function similarity(target, heard){
+  const t = normalize(target), h = normalize(heard);
+  if(!t.length) return 0;
+  const dist = levenshtein(t,h);
+  const maxLen = Math.max(t.length,h.length);
+  return Math.max(0, Math.round((1 - dist/maxLen)*100));
+}
+
+/* ---- Word-level & letter-level alignment (for detailed diff view) ---- */
+function alignSeq(a, b, eq){
+  // generic edit-distance alignment with backtrace. a/b are arrays. eq(x,y)->bool
+  const m=a.length, n=b.length;
+  const dp = Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++) dp[i][0]=i;
+  for(let j=0;j<=n;j++) dp[0][j]=j;
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      dp[i][j] = eq(a[i-1],b[j-1]) ? dp[i-1][j-1] : 1+Math.min(dp[i-1][j-1],dp[i-1][j],dp[i][j-1]);
+    }
+  }
+  let i=m,j=n; const ops=[];
+  while(i>0 || j>0){
+    if(i>0 && j>0 && eq(a[i-1],b[j-1])){ ops.unshift({type:'equal',a:a[i-1],b:b[j-1]}); i--; j--; }
+    else if(i>0 && j>0 && dp[i][j]===dp[i-1][j-1]+1){ ops.unshift({type:'replace',a:a[i-1],b:b[j-1]}); i--; j--; }
+    else if(i>0 && dp[i][j]===dp[i-1][j]+1){ ops.unshift({type:'delete',a:a[i-1],b:null}); i--; }
+    else { ops.unshift({type:'insert',a:null,b:b[j-1]}); j--; }
+  }
+  return ops;
+}
+function wordTokens(text){
+  return text.trim().split(/\s+/).map(w=>{
+    const disp = w.replace(/^[^a-zA-Z0-9']+|[^a-zA-Z0-9']+$/g,'');
+    return {disp: disp||w, norm: disp.toLowerCase()};
+  }).filter(t=>t.disp.length);
+}
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Wrap each word of a sentence in its own span so we can highlight it in sync with TTS playback.
+function wrapWords(text, containerId){
+  const parts = text.split(/(\s+)/); // keep whitespace tokens so spacing/layout is preserved
+  let html = '';
+  parts.forEach(p=>{
+    if(/^\s+$/.test(p) || p===''){ html += p; return; }
+    html += '<span class="kw">'+escHtml(p)+'</span>';
+  });
+  return '<span class="kw-line" id="'+containerId+'">'+html+'</span>';
+}
+
+// Highlights primary (ˈ) and secondary (ˌ) stress marks already present in our IPA strings.
+// No new data needed — it reads the stress marks we already wrote and makes them visually louder,
+// so beginners can see at a glance which syllable to punch.
+function renderIPA(ipa){
+  if(!ipa || ipa==='—') return ipa || '';
+  return escHtml(ipa)
+    .replace(/ˈ([^ˈˌ\s\/]+)/g, '<b class="stress-p">ˈ$1</b>')
+    .replace(/ˌ([^ˈˌ\s\/]+)/g, '<span class="stress-s">ˌ$1</span>');
+}
+
+function letterDiffHTML(targetWord, heardWord){
+  const a = targetWord.split(''), b = heardWord.split('');
+  const ops = alignSeq(a,b,(x,y)=>x===y);
+  return ops.map(op=>{
+    if(op.type==='equal') return '<span class="ltr ok">'+escHtml(op.a)+'</span>';
+    if(op.type==='replace') return '<span class="ltr bad" title="你读成了 &#39;'+escHtml(op.b)+'&#39;">'+escHtml(op.a)+'</span>';
+    if(op.type==='delete') return '<span class="ltr miss">'+escHtml(op.a)+'</span>';
+    return ''; // insert (extra letter heard) — skip in the target-anchored view
+  }).join('');
+}
+
+function buildDiffView(targetText, heardText){
+  const tWords = wordTokens(targetText);
+  const hWords = wordTokens(heardText);
+  const ops = alignSeq(tWords, hWords, (x,y)=>x.norm===y.norm);
+
+  let sentenceHTML = '';
+  let extraHTML = '';
+  ops.forEach(op=>{
+    if(op.type==='equal'){
+      sentenceHTML += '<span class="w-ok">'+escHtml(op.a.disp)+'</span> ';
+    } else if(op.type==='replace'){
+      const letters = letterDiffHTML(op.a.norm, op.b.norm);
+      sentenceHTML += '<span class="w-bad-wrap"><span class="w-bad">'+escHtml(op.a.disp)+'</span>'+
+        '<span class="letter-row">'+letters+'</span>'+
+        '<span class="w-said">你说了 "'+escHtml(op.b.disp)+'"</span></span> ';
+    } else if(op.type==='delete'){
+      sentenceHTML += '<span class="w-miss" title="没有听到这个词">'+escHtml(op.a.disp)+'</span> ';
+    } else if(op.type==='insert'){
+      extraHTML += '<span class="w-extra">'+escHtml(op.b.disp)+'</span> ';
+    }
+  });
+
+  let html = '<div class="diff-line">'+sentenceHTML+'</div>';
+  if(extraHTML){
+    html += '<div class="diff-extra">多说了：'+extraHTML+'</div>';
+  }
+  return html;
+}
+
+
+/* ============================================================
+   RENDER
+============================================================ */
+function updateProgress(){
+  const pct = totalPracticable ? Math.round((practiced.size/totalPracticable)*100) : 0;
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressPct').textContent = pct+'%';
+  document.getElementById('progressChip').textContent = practiced.size + ' / ' + totalPracticable + ' PRACTISED';
+}
+
+function renderRail(){
+  const rail = document.getElementById('rail');
+  rail.innerHTML = scenes.map((s,i)=>{
+    const num = s.isIntro ? '·' : String(i).padStart(2,'0');
+    return `<button class="rail-btn ${i===currentScene?'active':''}" data-i="${i}"><span class="n">${num}</span>${s.title}</button>`;
+  }).join('');
+  rail.querySelectorAll('.rail-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{ currentScene = parseInt(b.dataset.i); render(); });
+  });
+}
+
+function mkVocabCard(item, idx, sceneId){
+  const id = 'v-'+sceneId+'-'+idx;
+  const hwId = 'hw-'+id;
+  return `
+  <div class="vcard">
+    <span class="vtype ${item.t}">${item.t==='A'?'主动 A':'识别 B'}</span>
+    <div class="vword">${item.w}</div>
+    <div class="vipa">${renderIPA(item.ipa)}</div>
+    <div class="vmeaning">${item.zh}</div>
+    <div class="vexample">"${wrapWords(item.ex, hwId)}"</div>
+    <div class="dlg-controls">
+      <button class="ibtn" data-speak="${escapeAttr(item.ex)}" data-hw="${hwId}">🔊 朗读</button>
+      <button class="ibtn" data-mic="${id}" data-target="${escapeAttr(item.w)}">🎤 纠音</button>
+    </div>
+    <div class="feedback" id="fb-${id}"></div>
+  </div>`;
+}
+
+function mkPhraseItem(item, idx, sceneId, cls){
+  const id = (cls==='rescue'?'r-':'p-'+sceneId+'-')+idx;
+  const hwId = 'hw-'+id;
+  if(cls==='rescue'){
+    return `
+    <div class="rescue-card">
+      <div class="rescue-num">SURVIVAL PHRASE ${String(idx+1).padStart(2,'0')} / 07</div>
+      <div class="rescue-en">${wrapWords(item.en, hwId)}</div>
+      <div class="rescue-ipa">${renderIPA(item.ipa)}</div>
+      <div class="rescue-zh">${item.zh}</div>
+      <div class="dlg-controls">
+        <button class="ibtn" data-speak="${escapeAttr(item.en)}" data-hw="${hwId}">🔊 朗读</button>
+        <button class="ibtn" data-mic="${id}" data-target="${escapeAttr(item.en)}">🎤 跟读打分</button>
+      </div>
+      <div class="feedback" id="fb-${id}"></div>
+    </div>`;
+  }
+  return `
+  <div class="phrase-item">
+    <div class="phrase-en">${wrapWords(item.en, hwId)}</div>
+    <div class="phrase-ipa">${renderIPA(item.ipa)}</div>
+    <div class="phrase-zh">${item.zh}</div>
+    <div class="dlg-controls">
+      <button class="ibtn" data-speak="${escapeAttr(item.en)}" data-hw="${hwId}">🔊 朗读</button>
+      <button class="ibtn" data-mic="${id}" data-target="${escapeAttr(item.en)}">🎤 跟读打分</button>
+    </div>
+    <div class="feedback" id="fb-${id}"></div>
+  </div>`;
+}
+
+function mkDialogueLine(line, idx, sceneId){
+  const id = 'd-'+sceneId+'-'+idx;
+  const hwId = 'hw-'+id;
+  const colors = {Jack:'#3E8E7E', Margaret:'#B9791F', Staff:'#3E6FA3', Officer:'#3E6FA3', Crew:'#3E6FA3', Driver:'#C1442E', Agent:'#3E6FA3', Announce:'#7C88A6', Captain:'#B9791F', Stranger:'#C1442E', Passenger:'#B9791F'};
+  const initial = (line.sp||'?')[0];
+  const color = colors[line.sp] || '#5B6478';
+  return `
+  <div class="dlg-line">
+    <div class="dlg-avatar" style="background:${color}">${initial}</div>
+    <div class="dlg-body">
+      <div class="dlg-speaker">${line.sp}</div>
+      <div class="dlg-en">${wrapWords(line.en, hwId)}</div>
+      ${line.ipa ? '<div class="dlg-ipa">'+renderIPA(line.ipa)+'</div>' : ''}
+      <div class="dlg-zh">${line.zh}</div>
+      <div class="dlg-controls">
+        <button class="ibtn" data-speak="${escapeAttr(line.en)}" data-hw="${hwId}">🔊 听</button>
+        <button class="ibtn" data-mic="${id}" data-target="${escapeAttr(line.en)}">🎤 我来说这句</button>
+      </div>
+      <div class="feedback" id="fb-${id}"></div>
+    </div>
+  </div>`;
+}
+
+function escapeAttr(s){ return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+
+function renderScene(){
+  const s = scenes[currentScene];
+  const main = document.getElementById('main');
+  let html = `<div class="scene active">`;
+
+  html += `<div class="scene-head">
+      <div class="scene-kicker">${s.isIntro? 'BEFORE YOU START' : 'SCENE '+String(currentScene).padStart(2,'0')+' · '+s.tag}</div>
+      <h2 class="scene-title">${s.title}</h2>
+      <div class="scene-en">${s.en}</div>
+    </div>`;
+
+  html += `<div class="card">
+      <h3>📖 故事 Story</h3>
+      <div class="story-text ${s.isIntro?'':'story-collapsed'}" id="storyText">${s.story.trim().replace(/\n/g,'<br><br>')}</div>
+      ${s.isIntro?'':'<button class="story-toggle" id="storyToggle">展开全文 ▾</button>'}
+    </div>`;
+
+  if(s.dialogue && s.dialogue.length){
+    html += `<div class="card">
+      <h3>🎭 对话跟读 Dialogue Practice</h3>
+      <div class="dlg-toolbar">
+        <button class="ibtn autoplay-btn" id="autoplayBtn">▶ 自动播放整段对话</button>
+        <span class="dlg-toolbar-hint">纯听力模式，适合先不看字幕练耳朵</span>
+      </div>
+      <div id="dlgContainer">${s.dialogue.map((l,i)=>mkDialogueLine(l,i,s.id)).join('')}</div>
+    </div>`;
+  }
+
+  if(s.vocab && s.vocab.length){
+    html += `<div class="card"><h3>🗂️ 场景词汇 Vocabulary <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-soft);">（绿色=主动会说，蓝色=能识别即可）</span></h3>
+      <div class="vocab-grid">${s.vocab.map((v,i)=>mkVocabCard(v,i,s.id)).join('')}</div></div>`;
+  }
+
+  if(s.phrases && s.phrases.length){
+    html += `<div class="card"><h3>💬 本场景必须会说 Key Sentences</h3>${s.phrases.map((p,i)=>mkPhraseItem(p,i,s.id,'normal')).join('')}</div>`;
+  }
+
+  if(s.isIntro){
+    html += `<div class="card"><h3>🚑 七个救命句型 · Survival Phrases</h3>
+      <p style="font-size:14px;color:var(--ink-soft);margin-bottom:14px;">这七句话会在整本书的每一章反复出现——咖啡店、银行、医院、修车厂、学校、工作面试……先在这里练熟。</p>
+    </div>`;
+    html += rescuePhrases.map((p,i)=>mkPhraseItem(p,i,0,'rescue')).join('');
+  }
+
+  if(s.finalChallenge){
+    html += `<div class="card"><h3>✅ 最后口语挑战 Final Challenge</h3>
+      <p style="font-size:14px;color:var(--ink-soft);margin-bottom:10px;">不看故事，想象今天就是你出发的那天。按顺序完成下面每一步——点击打勾，检验自己是否真的记住了整趟旅程。</p>
+      <div id="checklist">${challengeSteps.map((c,i)=>`
+        <div class="check-item" data-i="${i}">
+          <div class="check-box">✓</div>
+          <div class="check-text">${c.en}</div>
+          <div class="check-zh">${c.zh}</div>
+        </div>`).join('')}</div>
+    </div>`;
+  }
+
+  html += `<div class="scene-nav">
+      <button class="navbtn" id="prevBtn" ${currentScene===0?'disabled':''}><span class="lbl">← Previous</span>${currentScene>0?scenes[currentScene-1].title:''}</button>
+      <button class="navbtn next" id="nextBtn" ${currentScene===scenes.length-1?'disabled':''}><span class="lbl">Next →</span>${currentScene<scenes.length-1?scenes[currentScene+1].title:''}</button>
+    </div>`;
+
+  html += `</div>`;
+  main.innerHTML = html;
+
+  // bind events
+  main.querySelectorAll('[data-speak]').forEach(btn=>{
+    btn.addEventListener('click', ()=> speak(btn.dataset.speak, btn, btn.dataset.hw));
+  });
+  main.querySelectorAll('[data-mic]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.dataset.mic;
+      const fb = document.getElementById('fb-'+id);
+      practiceItem(id, btn.dataset.target, btn, fb);
+    });
+  });
+  const toggle = document.getElementById('storyToggle');
+  if(toggle){
+    toggle.addEventListener('click', ()=>{
+      const st = document.getElementById('storyText');
+      st.classList.toggle('story-collapsed');
+      toggle.textContent = st.classList.contains('story-collapsed') ? '展开全文 ▾' : '收起 ▴';
+    });
+  }
+  const autoplayBtn = document.getElementById('autoplayBtn');
+  if(autoplayBtn && s.dialogue && s.dialogue.length){
+    autoplayBtn.addEventListener('click', ()=>{
+      toggleAutoplay(s.dialogue, document.getElementById('dlgContainer'));
+    });
+  }
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  if(prevBtn) prevBtn.addEventListener('click', ()=>{ if(currentScene>0){currentScene--; render();} });
+  if(nextBtn) nextBtn.addEventListener('click', ()=>{ if(currentScene<scenes.length-1){currentScene++; render();} });
+
+  const checklist = document.getElementById('checklist');
+  if(checklist){
+    checklist.querySelectorAll('.check-item').forEach(item=>{
+      item.addEventListener('click', ()=> item.classList.toggle('done'));
+    });
+  }
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function render(){
+  stopAutoplay();
+  renderRail();
+  renderScene();
+}
+
+render();
+updateProgress();
+
+// Speed control
+document.getElementById('speedSeg').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.speed-btn');
+  if(!btn) return;
+  document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  speechRate = parseFloat(btn.dataset.rate);
+});
+
+// Mic enable button
+document.getElementById('micStatusBtn').addEventListener('click', startSession);
+
+// Mic support hint
+if(!SR){
+  setMicStatus('denied','当前浏览器不支持语音识别');
+}
+</script>
+</body>
+</html>
